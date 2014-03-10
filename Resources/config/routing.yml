@@ -1,0 +1,3 @@
+canal_tp_sam_ecore_application_manager_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: CanalTPSamEcoreApplicationManagerBundle:Default:index }

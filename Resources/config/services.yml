@@ -1,0 +1,18 @@
+parameters:
+    canal_tp_sam_ecore_application_registration.class: CanalTP\Sam\Ecore\ApplicationManagerBundle\Services\ApplicationRegistration
+    canal_tp_sam_ecore_routing_loader.class: CanalTP\Sam\Ecore\ApplicationManagerBundle\Routing\ApplicationRoutingLoader
+
+services:
+    # Service d'enregistrement des applications
+    canal_tp_sam_ecore_application_registration:
+        class: %canal_tp_sam_ecore_application_registration.class%
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%kernel.bundles%'
+
+    canal_tp_sam_ecore_routing_loader:
+        class: %canal_tp_sam_ecore_routing_loader.class%
+        arguments:
+            - '%kernel.bundles%'
+        tags:
+            - { name: routing.loader }
