@@ -10,7 +10,7 @@ namespace CanalTP\Sam\Ecore\ApplicationManagerBundle\Services;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Console\Output\OutputInterface;
-use CanalTP\IussaadCoreBundle\Entity\Application;
+use CanalTP\SamCoreBundle\Entity\Application;
 
 class ApplicationRegistration
 {
@@ -27,7 +27,7 @@ class ApplicationRegistration
     }
 
     public function register(OutputInterface $output) {
-        $aExistApplications = $this->objectManager ->getRepository('CanalTPIussaadCoreBundle:Application')->findAll();
+        $aExistApplications = $this->objectManager ->getRepository('CanalTPSamCoreBundle:Application')->findAll();
         $allApplication = array();
         foreach ($aExistApplications as $existApplication) {
             $allApplication[] = $existApplication->getName();

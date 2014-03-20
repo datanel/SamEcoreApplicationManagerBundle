@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use CanalTP\IussaadCoreBundle\Entity\Application;
+use CanalTP\SamCoreBundle\Entity\Application;
 
 class ApplicationManagerCommand extends ContainerAwareCommand
 {
@@ -23,7 +23,7 @@ class ApplicationManagerCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('iussaad:update_application')
+            ->setName('sam:update_application')
             ->setDescription('Update applications in database')
         ;
     }

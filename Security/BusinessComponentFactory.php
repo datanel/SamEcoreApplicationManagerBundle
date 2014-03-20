@@ -32,7 +32,7 @@ class BusinessComponentFactory
         if ($application == null) {
             if ($this->session->has($this->appKey)) {
                 $app_id = $this->session->get($this->appKey);
-                $oApplication = $this->em->getRepository('CanalTPIussaadCoreBundle:Application')
+                $oApplication = $this->em->getRepository('CanalTPSamCoreBundle:Application')
                     ->find($app_id);
                 $application = strtolower($oApplication->getName());
             } else {

@@ -11,7 +11,7 @@ class ApplicationController extends Controller
         $appKey = $this->container->getParameter('session_app_key');
         $this->get('session')->set($appKey, $application);
         $em = $this->getDoctrine()->getManager();
-        $oApplication = $em->getRepository('CanalTPIussaadCoreBundle:Application')
+        $oApplication = $em->getRepository('CanalTPSamCoreBundle:Application')
             ->find($application);
         $this->get('session')->set('selectedappname', strtoupper($oApplication->getName()));
         return $this->redirect($this->generateUrl('root'));
@@ -20,7 +20,7 @@ class ApplicationController extends Controller
     public function toolbarAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $aApplications = $em->getRepository('CanalTPIussaadCoreBundle:Application')
+        $aApplications = $em->getRepository('CanalTPSamCoreBundle:Application')
             ->findAll();
             return $this->render(
                 'CanalTPSamEcoreApplicationManagerBundle:Application:toolbar.html.twig',
