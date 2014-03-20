@@ -1,6 +1,7 @@
 <?php
 
-namespace CanalTP\Sam\Ecore\ApplicationManagerBundle\Api;
+namespace CanalTP\Sam\Ecore\ApplicationManagerBundle\Security;
+
 
 abstract class AbstractBusinessModule implements BusinessModuleInterface
 {

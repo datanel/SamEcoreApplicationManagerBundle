@@ -1,3 +1,7 @@
-canal_tp_sam_ecore_application_manager_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: CanalTPSamEcoreApplicationManagerBundle:Default:index }
+canal_tp_sam_ecore_application_manager_choose_application:
+    pattern: /change/{application}
+    defaults: { _controller: CanalTPSamEcoreApplicationManagerBundle:Application:change }
+
+canal_tp_sam_ecore_application_manager_toolbar:
+    pattern: /toolbar
+    defaults: { _controller: CanalTPSamEcoreApplicationManagerBundle:Application:toolbar }
