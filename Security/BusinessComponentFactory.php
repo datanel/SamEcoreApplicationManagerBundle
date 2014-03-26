@@ -13,7 +13,7 @@ class BusinessComponentFactory
     private $session;
     private $appKey;
     private $businessComponents;
-    
+
     public function __construct(EntityManager $em, Session $session, $appKey)
     {
         $this->em = $em;
@@ -21,7 +21,7 @@ class BusinessComponentFactory
         $this->appKey = $appKey;
         $this->businessComponents = array();
     }
-        
+
     public function addBusinessComponent(BusinessComponentInterface $businessComponent, $application)
     {
         $this->businessComponents[$application] = $businessComponent;
@@ -39,13 +39,13 @@ class BusinessComponentFactory
                 return;
             }
         }
-        
+
         if (array_key_exists($application, $this->businessComponents)) {
            return $this->businessComponents[$application];
         }
-        
+
         throw new LogicException("No business component for ($application) application");
-        
+
         return;
-    }    
+    }
 }

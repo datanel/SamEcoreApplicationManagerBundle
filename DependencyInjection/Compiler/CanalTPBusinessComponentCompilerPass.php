@@ -16,60 +16,50 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
     /**
      * {@inheritDoc}
      */
-    public function process(ContainerBuilder $container) {
-        
-        preg_match_all("|([^,]*)\\\CanalTP([^\\\]*)BusinessAppBundle|U",
-                       implode(',', $container->getParameter('kernel.bundles')),
-                       $aApplicationMetiers,
-                       PREG_SET_ORDER);
+    public function process(ContainerBuilder $container)
+    {
+        preg_match_all(
+            "|(?P<namespace>[^,]*)\\\CanalTP(?P<application>[^\\\]*)BusinessAppBundle|U",
+            implode(',', $container->getParameter('kernel.bundles')),
+            $aApplicationMetiers,
+            PREG_SET_ORDER
+        );
+
+        $factoryDefinition = $container
+            ->register('sam.business_component', 'CanalTP\Sam\Ecore\ApplicationManagerBundle\Security\BusinessComponentFactory')
+            ->addArgument(new Reference('doctrine.orm.entity_manager'))
+            ->addArgument(new Reference('session'))
+            ->addArgument('%session_app_key%');
 
         foreach ($aApplicationMetiers as $aApplicationMetier) {
-
-            $namespace            = $aApplicationMetier[1];
-            $application          = strtolower($aApplicationMetier[2]);
+            $namespace            = $aApplicationMetier['namespace'];
+            $application          = strtolower($aApplicationMetier['application']);
             $businessModuleId     = 'sam.business_module.' . $application;
             $businessPermissionId = 'sam.business_permission_manager.' . $application;
             $businessComponentId  = 'sam.business_component.' . $application;
 
             // define business module service of this application
             $container
-                    ->register($businessModuleId, $namespace . '\Security\BusinessModule')
-                    ->addArgument('%permissions%')
-                    ->setPublic(false);
-            
+                ->register($businessModuleId, $namespace . '\Security\BusinessModule')
+                ->addArgument('%permissions%')
+                ->setPublic(false);
+
             // define business permission manager service of this application
             $container
-                    ->register($businessPermissionId, $namespace . '\Security\BusinessPermissionManager')
-                    ->addArgument(new Reference($businessModuleId))
-                    ->setPublic(false);
-            
+                ->register($businessPermissionId, $namespace . '\Security\BusinessPermissionManager')
+                ->addArgument(new Reference($businessModuleId))
+                ->setPublic(false);
+
             // define business component service of this application
             $container
-                    ->register($businessComponentId, $namespace . '\Security\BusinessComponent')
-                    ->addArgument(new Reference($businessPermissionId))
-                    ->setPublic(false)
-                    ->addTag('sam.business_component', array('application' => $application));
-        }
-        
-        $factoryDefinition = $container
-                ->register('sam.business_component', 'CanalTP\Sam\Ecore\ApplicationManagerBundle\Security\BusinessComponentFactory')
-                ->addArgument(new Reference('doctrine.orm.entity_manager'))
-                ->addArgument(new Reference('session'))
-                ->addArgument('%session_app_key%');
+                ->register($businessComponentId, $namespace . '\Security\BusinessComponent')
+                ->addArgument(new Reference($businessPermissionId))
+                ->setPublic(false);
 
-        $taggedServices = $container->findTaggedServiceIds(
-            'sam.business_component'
-        );
-        foreach ($taggedServices as $id => $tagAttributes) {
-            foreach ($tagAttributes as $attributes) {
-                $factoryDefinition->addMethodCall(
-                    'addBusinessComponent',
-                    array(
-                    new Reference($id), $attributes["application"])
-                );
-            }
+            $factoryDefinition->addMethodCall(
+                'addBusinessComponent',
+                array(new Reference($businessComponentId), $application)
+            );
         }
     }
 }
-
-?>
