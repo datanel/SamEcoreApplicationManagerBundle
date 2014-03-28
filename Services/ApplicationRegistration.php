@@ -46,8 +46,6 @@ class ApplicationRegistration
             }
         }
         $this->objectManager ->flush();
-        
+
     }
 }
-
-?>

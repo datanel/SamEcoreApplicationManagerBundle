@@ -1,6 +1,8 @@
 parameters:
     canal_tp_sam_ecore_application_registration.class: CanalTP\Sam\Ecore\ApplicationManagerBundle\Services\ApplicationRegistration
     canal_tp_sam_ecore_routing_loader.class: CanalTP\Sam\Ecore\ApplicationManagerBundle\Routing\ApplicationRoutingLoader
+    canal_tp_sam_ecore_route_prefix: 'business'
+    canal_tp_sam_ecore_event_select_controller.class: 'CanalTP\Sam\Ecore\ApplicationManagerBundle\Component\EventListener\SelectController'
 
 services:
     # Service d'enregistrement des applications
@@ -14,5 +16,14 @@ services:
         class: %canal_tp_sam_ecore_routing_loader.class%
         arguments:
             - '%kernel.bundles%'
+            - '%canal_tp_sam_ecore_route_prefix%'
         tags:
             - { name: routing.loader }
+
+    canal_tp_sam.component.select_controller:
+        class: %canal_tp_sam_ecore_event_select_controller.class%
+        arguments:
+            - '@router'
+            - '%canal_tp_sam_ecore_route_prefix%'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

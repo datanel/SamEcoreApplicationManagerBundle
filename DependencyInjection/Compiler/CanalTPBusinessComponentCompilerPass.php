@@ -16,8 +16,9 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
     /**
      * {@inheritDoc}
      */
-    public function process(ContainerBuilder $container) {
-        
+    public function process(ContainerBuilder $container)
+    {
+        $aApplicationMetiers = array();
         preg_match_all("|([^,]*)\\\CanalTP([^\\\]*)BusinessAppBundle|U",
                        implode(',', $container->getParameter('kernel.bundles')),
                        $aApplicationMetiers,
@@ -36,21 +37,22 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
                     ->register($businessModuleId, $namespace . '\Security\BusinessModule')
                     ->addArgument('%permissions%')
                     ->setPublic(false);
-            
+
             // define business permission manager service of this application
             $container
                     ->register($businessPermissionId, $namespace . '\Security\BusinessPermissionManager')
                     ->addArgument(new Reference($businessModuleId))
                     ->setPublic(false);
-            
+
             // define business component service of this application
             $container
                     ->register($businessComponentId, $namespace . '\Security\BusinessComponent')
                     ->addArgument(new Reference($businessPermissionId))
+                    ->addArgument(new Reference('service_container'))
                     ->setPublic(false)
                     ->addTag('sam.business_component', array('application' => $application));
         }
-        
+
         $factoryDefinition = $container
                 ->register('sam.business_component', 'CanalTP\Sam\Ecore\ApplicationManagerBundle\Security\BusinessComponentFactory')
                 ->addArgument(new Reference('doctrine.orm.entity_manager'))
@@ -71,5 +73,3 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
         }
     }
 }
-
-?>
