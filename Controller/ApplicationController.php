@@ -8,13 +8,21 @@ class ApplicationController extends Controller
 {
     public function changeAction($application)
     {
-        $appKey = $this->container->getParameter('session_app_key');
-        $this->get('session')->set($appKey, $application);
         $em = $this->getDoctrine()->getManager();
         $oApplication = $em->getRepository('CanalTPSamCoreBundle:Application')->find($application);
-        $this->get('session')->set('selectedappname', strtoupper($oApplication->getName()));
+        $appKey = $this->container->getParameter('session_app_key');
+        $this->get('session')->set($appKey, $application);
+//        $this->get('session')->set('selectedappname', strtoupper($oApplication->getName()));
 
-        return $this->redirect($this->generateUrl('root'));
+        $defaultUrl = $oApplication->getDefaultRoute();
+
+        if (is_null($defaultUrl)) {
+            throw new \Exception('There is no default route for this application');
+        }
+
+        $defaultRoute = $this->get('router')->match($defaultUrl);
+
+        return $this->redirect($this->get('router')->generate($defaultRoute["_route"]));
     }
 
     public function toolbarAction()
