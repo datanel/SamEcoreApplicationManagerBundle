@@ -53,8 +53,10 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
             // define business component service of this application
             $container
                 ->register($businessComponentId, $namespace . '\Security\BusinessComponent')
-                ->addArgument(new Reference($businessPermissionId))
-                ->setPublic(false);
+                    ->addArgument(new Reference($businessPermissionId))
+                    ->addArgument(new Reference('service_container'))
+                    ->setPublic(false)
+                    ->addTag('sam.business_component', array('application' => $application));
 
             $factoryDefinition->addMethodCall(
                 'addBusinessComponent',
