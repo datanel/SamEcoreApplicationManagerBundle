@@ -57,6 +57,11 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
                     ->addArgument(new Reference('service_container'))
                     ->setPublic(false)
                     ->addTag('sam.business_component', array('application' => $application));
+
+            $factoryDefinition->addMethodCall(
+                'addBusinessComponent',
+                array(new Reference($businessComponentId), $application)
+            );
         }
 
         $factoryDefinition = $container
