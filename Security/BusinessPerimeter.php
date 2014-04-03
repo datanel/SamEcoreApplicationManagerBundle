@@ -2,7 +2,7 @@
 
 namespace CanalTP\Sam\Ecore\ApplicationManagerBundle\Security;
 
-class BusinessPermissionInterface implements BusinessPermissionInterface
+class BusinessPerimeter implements BusinessPerimeterInterface
 {
     private $id;
     private $name;
