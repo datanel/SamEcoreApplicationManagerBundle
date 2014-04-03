@@ -42,7 +42,7 @@ class ApplicationRegistration
         foreach ($aApplications['applications'] as $application) {
             if (!in_array($application, $allApplication)) {
                 $app = new Application($application);
-                $this->objectManager ->persist($app);
+                $this->objectManager->persist($app);
                 $output->writeln('Insert Application ' . $application);
             }
         }
