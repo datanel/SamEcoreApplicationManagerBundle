@@ -41,7 +41,7 @@ class ApplicationRoutingLoader extends Loader
         preg_match_all(
             "|\\\CanalTP(?P<applications>[^\\\]*)BusinessAppBundle|U",
             implode(',', $this->aBundles),
-                               $aApplications,
+            $aApplications,
             PREG_PATTERN_ORDER
         );
 
@@ -54,18 +54,19 @@ class ApplicationRoutingLoader extends Loader
                                             $type);
             //$appRoutes : business routes, but redirect all to sam controller
             //$importedRoutes : business routes renamed, but still with the good business controller
-            $appRoutes = clone $importedRoutes;
-            $appRoutes->addDefaults(array('_controller' => 'CanalTPSamBundle:Sam:AppRender'));
-            $appRoutes->addPrefix('/'. strtolower($application));
+//            $appRoutes = clone $importedRoutes;
+//            $appRoutes->addDefaults(array('_controller' => 'CanalTPSamBundle:Sam:AppRender'));
+//            $appRoutes->addPrefix('/'. strtolower($application));
+            $importedRoutes->addPrefix('/'. strtolower($application));
 
-            foreach ($importedRoutes as $routeName => $route) {
-                $importedRoutes->add('sam_' . $this->routePrefix . '_' . $routeName, clone $route);
-                $importedRoutes->remove($routeName);
-            }
+//            foreach ($importedRoutes as $routeName => $route) {
+//                $importedRoutes->add('sam_' . $this->routePrefix . '_' . $routeName, clone $route);
+//                $importedRoutes->remove($routeName);
+//            }
 
-            $importedRoutes->addPrefix('/' . $this->routePrefix . '-'. strtolower($application));
+//            $importedRoutes->addPrefix('/' . $this->routePrefix . '-'. strtolower($application));
             $collection->addCollection($importedRoutes);
-            $collection->addCollection($appRoutes);
+//            $collection->addCollection($appRoutes);
         }
 
         return $collection;
