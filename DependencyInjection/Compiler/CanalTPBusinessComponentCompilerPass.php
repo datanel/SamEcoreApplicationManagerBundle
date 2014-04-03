@@ -21,7 +21,7 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
         preg_match_all(
             "|(?P<namespace>[^,]*)\\\CanalTP(?P<application>[^\\\]*)BridgeBundle|U",
             implode(',', $container->getParameter('kernel.bundles')),
-            $aApplicationMetiers,
+            $applications,
             PREG_SET_ORDER
         );
 
@@ -31,29 +31,13 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
             ->addArgument(new Reference('session'))
             ->addArgument('%session_app_key%');
 
-        foreach ($aApplicationMetiers as $aApplicationMetier) {
-            $namespace            = $aApplicationMetier['namespace'];
-            $application          = strtolower($aApplicationMetier['application']);
+        foreach ($applications as $application) {
+            $namespace            = $application['namespace'];
+            $application          = strtolower($application['application']);
             $businessModuleId     = 'sam.business_module.' . $application;
             $businessPermissionId = 'sam.business_permission_manager.' . $application;
             $businessPerimeterId  = 'sam.business_perimeter_manager.' . $application;
             $businessComponentId  = 'sam.business_component.' . $application;
-
-            // define business module service of this application
-            $container
-                ->register($businessModuleId, $namespace . '\Security\BusinessModule')
-                ->addArgument('%'.$application.'.permissions%')
-                ->setPublic(false);
-
-            // define business permission manager service of this application
-            $container
-                    ->register($businessPermissionId, $namespace . '\Security\BusinessPermissionManager')
-                    ->addArgument(new Reference($businessModuleId))
-                    ->setPublic(false);
-
-            // if (!$container->has($businessPerimeterId)) {
-
-            // }
 
             // define business component service of this application
             $container
@@ -64,7 +48,7 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
 
             $factoryDefinition->addMethodCall(
                 'addBusinessComponent',
-                array(new Reference($businessComponentId), $application)
+                array($application, new Reference($businessComponentId))
             );
         }
 

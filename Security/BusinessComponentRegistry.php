@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Exception\LogicException;
 
-class BusinessComponentFactory
+class BusinessComponentRegistry
 {
     private $em;
     private $session;
@@ -22,7 +22,7 @@ class BusinessComponentFactory
         $this->businessComponents = array();
     }
 
-    public function addBusinessComponent(BusinessComponentInterface $businessComponent, $application)
+    public function addBusinessComponent($application, BusinessComponentInterface $businessComponent)
     {
         $this->businessComponents[$application] = $businessComponent;
     }
