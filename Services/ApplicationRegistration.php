@@ -25,8 +25,7 @@ class ApplicationRegistration
 
     public function register(OutputInterface $output)
     {
-        $aExistApplications = $this->objectManager
-            ->getRepository('CanalTPSamCoreBundle:Application')->findAll();
+        $aExistApplications = $this->objectManager->getRepository('CanalTPSamCoreBundle:Application')->findAll();
         $allApplication = array();
         foreach ($aExistApplications as $existApplication) {
             $allApplication[] = $existApplication->getName();
@@ -46,8 +45,6 @@ class ApplicationRegistration
                 $output->writeln('Insert Application ' . $application);
             }
         }
-
         $this->objectManager ->flush();
-
     }
 }
