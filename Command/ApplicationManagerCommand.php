@@ -23,7 +23,7 @@ class ApplicationManagerCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('sam:update_application')
+            ->setName('sam:application:update')
             ->setDescription('Update applications in database')
         ;
     }
