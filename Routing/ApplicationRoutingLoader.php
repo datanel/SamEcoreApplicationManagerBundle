@@ -38,13 +38,14 @@ class ApplicationRoutingLoader extends Loader
         $collection = new RouteCollection();
         $aApplications = array();
 
-        preg_match_all("|\\\CanalTP([^\\\]*)BusinessAppBundle|U",
-                       implode(',',
-                               $this->aBundles),
+        preg_match_all(
+            "|\\\CanalTP(?P<applications>[^\\\]*)BusinessAppBundle|U",
+            implode(',', $this->aBundles),
                                $aApplications,
-                               PREG_PATTERN_ORDER);
+            PREG_PATTERN_ORDER
+        );
 
-        foreach ($aApplications[1] as $application) {
+        foreach ($aApplications['applications'] as $application) {
 
             $resource = '@CanalTP' . $application . 'BusinessAppBundle/Resources/config/routing.yml';
             $type     = 'yaml';
@@ -54,16 +55,16 @@ class ApplicationRoutingLoader extends Loader
             //$appRoutes : business routes, but redirect all to sam controller
             //$importedRoutes : business routes renamed, but still with the good business controller
             $appRoutes = clone $importedRoutes;
-//            $appRoutes->addDefaults(array('_controller' => 'CanalTPSamBundle:Sam:AppRender'));
+            $appRoutes->addDefaults(array('_controller' => 'CanalTPSamBundle:Sam:AppRender'));
             $appRoutes->addPrefix('/'. strtolower($application));
 
-//            foreach ($importedRoutes as $routeName => $route) {
-//                $importedRoutes->add('sam_' . $this->routePrefix . '_' . $routeName, clone $route);
-//                $importedRoutes->remove($routeName);
-//            }
+            foreach ($importedRoutes as $routeName => $route) {
+                $importedRoutes->add('sam_' . $this->routePrefix . '_' . $routeName, clone $route);
+                $importedRoutes->remove($routeName);
+            }
 
-//            $importedRoutes->addPrefix('/' . $this->routePrefix . '-'. strtolower($application));
-//            $collection->addCollection($importedRoutes);
+            $importedRoutes->addPrefix('/' . $this->routePrefix . '-'. strtolower($application));
+            $collection->addCollection($importedRoutes);
             $collection->addCollection($appRoutes);
         }
 

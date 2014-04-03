@@ -40,15 +40,15 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
 
             // define business module service of this application
             $container
-                ->register($businessModuleId, $namespace . '\Security\BusinessModule')
-                ->addArgument('%permissions%')
-                ->setPublic(false);
+                    ->register($businessModuleId, $namespace . '\Security\BusinessModule')
+                    ->addArgument('%permissions%')
+                    ->setPublic(false);
 
             // define business permission manager service of this application
             $container
-                ->register($businessPermissionId, $namespace . '\Security\BusinessPermissionManager')
-                ->addArgument(new Reference($businessModuleId))
-                ->setPublic(false);
+                    ->register($businessPermissionId, $namespace . '\Security\BusinessPermissionManager')
+                    ->addArgument(new Reference($businessModuleId))
+                    ->setPublic(false);
 
             // define business component service of this application
             $container
@@ -69,6 +69,5 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
                 'addBusinessComponent',
                 array(new Reference($businessComponentId), $application)
             );
-        }
     }
 }
