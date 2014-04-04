@@ -32,35 +32,15 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
             ->addArgument('%session_app_key%');
 
         foreach ($applications as $application) {
-            $namespace            = $application['namespace'];
-            $application          = strtolower($application['application']);
-            $businessModuleId     = 'sam.business_module.' . $application;
-            $businessPermissionId = 'sam.business_permission_manager.' . $application;
-            $businessPerimeterId  = 'sam.business_perimeter_manager.' . $application;
-            $businessComponentId  = 'sam.business_component.' . $application;
-
-            // define business component service of this application
-            $container
-                ->register($businessComponentId, $namespace . '\Security\BusinessComponent')
-                ->addArgument(new Reference($businessPermissionId))
-                ->addArgument(new Reference($businessPerimeterId))
-                ->setPublic(false);
+            $applicationName = strtolower($application['application']);
 
             $factoryDefinition->addMethodCall(
                 'addBusinessComponent',
-                array($application, new Reference($businessComponentId))
+                array(
+                    $applicationName,
+                    new Reference('sam.business_component.' . $applicationName)
+                )
             );
         }
-
-        $factoryDefinition = $container
-                ->register('sam.business_component', 'CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessComponentFactory')
-                ->addArgument(new Reference('doctrine.orm.entity_manager'))
-                ->addArgument(new Reference('session'))
-                ->addArgument('%session_app_key%');
-
-            $factoryDefinition->addMethodCall(
-                'addBusinessComponent',
-                array(new Reference($businessComponentId), $application)
-            );
     }
 }
