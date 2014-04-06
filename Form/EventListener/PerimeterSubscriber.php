@@ -2,17 +2,19 @@
 
 namespace CanalTP\Sam\Ecore\ApplicationManagerBundle\Form\EventListener;
 
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\Security\Core\Role\RoleHierarchy;
-use Symfony\Component\Security\Core\Role\Role;
-use Symfony\Component\Form\FormFactoryInterface;
-use CanalTP\SamEcoreUserManagerBundle\Form\DataTransformer\RoleToRolesTransformer;
-use CanalTP\SamEcoreUserManagerBundle\Entity\User;
-use Doctrine\ORM\EntityManager;
 use CanalTP\SamCoreBundle\Entity\ApplicationRole;
+use CanalTP\SamEcoreUserManagerBundle\Entity\User;
+use CanalTP\SamEcoreUserManagerBundle\Form\DataTransformer\RoleToRolesTransformer;
+
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\ChoiceList\ObjectChoiceList;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Security\Core\Role\Role;
+use Symfony\Component\Security\Core\Role\RoleHierarchy;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class PerimeterSubscriber implements EventSubscriberInterface
 {
@@ -44,15 +46,13 @@ class PerimeterSubscriber implements EventSubscriberInterface
      */
     public function preSetData(FormEvent $event)
     {
-
-
         $form = $event->getForm();
         $data = $event->getData();
 
         if ($data instanceof ApplicationRole) {
             $app = strtolower($data->getApplication()->getName());
             $perimeters = $this->businessComponent->getBusinessComponent($app)->getPerimetersManager()->getPerimeters();
-            //$this->AddPerimeterForm($data, $form);
+            $this->AddPerimeterForm($data, $form, $perimeters);
         }
         $event->setData($data);
     }
@@ -65,29 +65,16 @@ class PerimeterSubscriber implements EventSubscriberInterface
      * @param  type $form
      * @return type
      */
-    protected function AddPerimeterForm(&$data, &$form)
+    protected function AddPerimeterForm(&$data, &$form, $perimeters)
     {
-        $user = $this->securityContext->getToken()->getUser();
-        if ($this->securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-
-        }
-
+        $choiceList = new ObjectChoiceList($perimeters, 'name');
         $form->add(
-            'parents',
-            'entity',
+            'perimeters',
+            'choice',
             array(
-                'label'         => $this->translator->trans('ctp_user.user.add.roles') . ' ' . $data->getApplication()->getName(),
-                'multiple'      => true,
-                'expanded'      => true,
-                'class'         => 'CanalTPSamCoreBundle:ApplicationRole',
-                'query_builder' => function(EntityRepository $er) use ($data) {
-                    $qb = $er->createQueryBuilder('r')
-                        ->where('r.application = :application')
-                        ->setParameter('application', $data->getApplication());
-
-                    return $qb->orderBy('r.name', 'ASC');
-                },
-                'translation_domain' => 'messages'
+                'choice_list' => $choiceList,
+                'expanded' => true,
+                'multiple' => true
             )
         );
     }
