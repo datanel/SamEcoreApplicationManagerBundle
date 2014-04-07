@@ -19,7 +19,7 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         preg_match_all(
-            "|(?P<namespace>[^,]*)\\\CanalTP(?P<application>[^\\\]*)BusinessAppBundle|U",
+            "|(?P<namespace>[^,]*)\\\CanalTP(?P<application>[^\\\]*)BridgeBundle|U",
             implode(',', $container->getParameter('kernel.bundles')),
             $aApplicationMetiers,
             PREG_SET_ORDER
