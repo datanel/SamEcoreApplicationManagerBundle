@@ -2,20 +2,23 @@
     "name": "canaltp/sam-ecore-application-manager-bundle",
     "type": "symfony-bundle",
     "description": "Sam e-core application bundle",
-    "keywords": [],
+    "keywords": ["sam", "application", "manager"],
     "homepage": "http://hg.prod.canaltp.fr/Sam/CanalTPSamEcoreApplicationManagerBundle.git",
     "license": "MIT",
     "authors": [
         {
             "name": "Akambi Fagbohoun",
             "email": "akambi.fagbohoun@canaltp.fr"
+        },
+        {
+            "name": "Kévin ZIEMIANSKI",
+            "email": "kevin ziemianski@canaltp.fr"
         }
     ],
     "require": {
         "php": ">=5.3.2"
     },
     "autoload": {
-        "psr-0": { "CanalTP\\Sam\\Ecore\\ApplicationManagerBundle\\": "" }
-    },
-    "target-dir": "CanalTP/Sam/Ecore/ApplicationManagerBundle/"
+        "psr-4": { "CanalTP\\SamEcoreApplicationManagerBundle\\": "" }
+    }
 }

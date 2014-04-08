@@ -32,7 +32,7 @@ class ApplicationRegistration
         }
 
         preg_match_all(
-            "|\\\CanalTP(?P<applications>[^\\\]*)BusinessAppBundle|U",
+            "|\\\CanalTP(?P<applications>[^\\\]*)BridgeBundle|U",
             implode(',', $this->aBundles),
             $aApplications,
             PREG_PATTERN_ORDER

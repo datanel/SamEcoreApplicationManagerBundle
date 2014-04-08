@@ -39,7 +39,7 @@ class ApplicationRoutingLoader extends Loader
         $aApplications = array();
 
         preg_match_all(
-            "|\\\CanalTP(?P<applications>[^\\\]*)BusinessAppBundle|U",
+            "|\\\CanalTP(?P<applications>[^\\\]*)BridgeBundle|U",
             implode(',', $this->aBundles),
             $aApplications,
             PREG_PATTERN_ORDER
@@ -47,7 +47,7 @@ class ApplicationRoutingLoader extends Loader
 
         foreach ($aApplications['applications'] as $application) {
 
-            $resource = '@CanalTP' . $application . 'BusinessAppBundle/Resources/config/routing.yml';
+            $resource = '@CanalTP' . $application . 'BridgeBundle/Resources/config/routing.yml';
             $type     = 'yaml';
 
             $importedRoutes = $this->import($resource,
