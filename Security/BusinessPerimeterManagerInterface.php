@@ -2,7 +2,7 @@
 
 namespace CanalTP\SamEcoreApplicationManagerBundle\Security;
 
-use Symfony\Component\Security\Core\UserInterface;
+use FOS\UserBundle\Model\UserInterface;
 
 interface BusinessPerimeterManagerInterface
 {

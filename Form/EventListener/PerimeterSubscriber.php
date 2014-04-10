@@ -34,8 +34,6 @@ class PerimeterSubscriber implements EventSubscriberInterface
     {
         return array(
             FormEvents::PRE_SET_DATA  => 'preSetData',
-            // FormEvents::POST_SET_DATA => 'postSetData',
-            // FormEvents::SUBMIT => 'submit',
         );
     }
 
@@ -78,65 +76,4 @@ class PerimeterSubscriber implements EventSubscriberInterface
             )
         );
     }
-
-    /**
-     * Méthode appelé avant soumission des données du formulaire
-     * @param \Symfony\Component\Form\FormEvent $event
-     */
-    public function submit(FormEvent $event)
-    {
-        $data = $event->getData();
-
-        $selectedApplications = $data->getGroups();
-
-        $aUserRoles = array();
-        $roleGroupByApplications = $data->getRoleGroupByApplications();
-
-        foreach ($roleGroupByApplications as $roleGroupByApplication) {
-            $aUserRoles[$roleGroupByApplication->getApplication()->getId()] = $roleGroupByApplication->getParents();
-        }
-
-        foreach ($selectedApplications as $selectedApplication) {
-            foreach($aUserRoles[$selectedApplication->getId()] as $applicationRole) {
-                $data->addApplicationRole($applicationRole);
-            }
-        }
-
-        $event->setData($data);
-    }
-
-    /**
-     * Fonction appelée lors de l'evenement FormEvents::POST_SET_DATA
-     *
-     * @param \Symfony\Component\Form\Event\FormEvent $event
-     */
-    public function postSetData(FormEvent $event)
-    {
-        $this->addPasswordField($event);
-    }
-
-    /**
-     * Ajoute une valeur dans le champs password pour permettre
-     * l'enregistrement en attendant qu'il soit redefini lors
-     * de l'activation du compte
-     *
-     * @param \Symfony\Component\Form\Event\DataEvent $event
-     */
-    private function addPasswordField(FormEvent $event)
-    {
-        $data = $event->getData();
-
-        // During form creation setData() is called with null as an argument
-        // by the FormBuilder constructor. You're only concerned with when
-        // setData is called with an actual Entity object in it (whether new
-        // or fetched with Doctrine). This if statement lets you skip right
-        // over the null condition.
-        if (null === $data) {
-            return;
-        }
-
-        $data->setPlainPassword(md5(time()));
-        $event->setData($data);
-    }
-
 }
