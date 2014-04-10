@@ -2,8 +2,8 @@ parameters:
     canal_tp_sam_ecore_application_registration.class: CanalTP\SamEcoreApplicationManagerBundle\Services\ApplicationRegistration
     canal_tp_sam_ecore_routing_loader.class: CanalTP\SamEcoreApplicationManagerBundle\Routing\ApplicationRoutingLoader
     canal_tp_sam_ecore_route_prefix: 'business'
-    canal_tp_sam_ecore_event_select_controller.class: 'CanalTP\Sam\Ecore\ApplicationManagerBundle\Component\EventListener\SelectController'
-    canal_tp_sam.perimeter.form.listener.class: CanalTP\Sam\Ecore\ApplicationManagerBundle\Form\EventListener\PerimeterSubscriber
+    canal_tp_sam_ecore_event_select_controller.class: 'CanalTP\SamEcoreApplicationManagerBundle\Component\EventListener\SelectController'
+    canal_tp_sam.perimeter.form.listener.class: CanalTP\SamEcoreApplicationManagerBundle\Form\EventListener\PerimeterSubscriber
 
 services:
     # Service d'enregistrement des applications

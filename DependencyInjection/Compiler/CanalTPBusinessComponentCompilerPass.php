@@ -26,7 +26,7 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
         );
 
         $factoryDefinition = $container
-            ->register('sam.business_component', 'CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessComponentFactory')
+            ->register('sam.business_component', 'CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessComponentRegistry')
             ->addArgument(new Reference('doctrine.orm.entity_manager'))
             ->addArgument(new Reference('session'))
             ->addArgument('%session_app_key%');

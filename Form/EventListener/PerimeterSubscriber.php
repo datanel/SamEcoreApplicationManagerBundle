@@ -1,6 +1,6 @@
 <?php
 
-namespace CanalTP\Sam\Ecore\ApplicationManagerBundle\Form\EventListener;
+namespace CanalTP\SamEcoreApplicationManagerBundle\Form\EventListener;
 
 use CanalTP\SamCoreBundle\Entity\ApplicationRole;
 use CanalTP\SamEcoreUserManagerBundle\Entity\User;
@@ -51,6 +51,7 @@ class PerimeterSubscriber implements EventSubscriberInterface
 
         if ($data instanceof ApplicationRole) {
             $app = strtolower($data->getApplication()->getName());
+            var_dump($this->businessComponent);die;
             $perimeters = $this->businessComponent->getBusinessComponent($app)->getPerimetersManager()->getPerimeters();
             $this->AddPerimeterForm($data, $form, $perimeters);
         }
