@@ -51,7 +51,6 @@ class PerimeterSubscriber implements EventSubscriberInterface
 
         if ($data instanceof ApplicationRole) {
             $app = strtolower($data->getApplication()->getName());
-            var_dump($this->businessComponent);die;
             $perimeters = $this->businessComponent->getBusinessComponent($app)->getPerimetersManager()->getPerimeters();
             $this->AddPerimeterForm($data, $form, $perimeters);
         }
