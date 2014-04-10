@@ -12,14 +12,13 @@ class BusinessComponentRegistry
     private $em;
     private $session;
     private $appKey;
-    private $businessComponents;
+    private $businessComponents = array();
 
     public function __construct(EntityManager $em, Session $session, $appKey)
     {
         $this->em = $em;
         $this->session = $session;
         $this->appKey = $appKey;
-        $this->businessComponents = array();
     }
 
     public function addBusinessComponent($application, BusinessComponentInterface $businessComponent)
