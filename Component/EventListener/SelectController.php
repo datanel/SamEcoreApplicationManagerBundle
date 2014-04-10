@@ -1,6 +1,6 @@
 <?php
 
-namespace CanalTP\Sam\Ecore\ApplicationManagerBundle\Component\EventListener;
+namespace CanalTP\SamEcoreApplicationManagerBundle\Component\EventListener;
 
 /**
  * Description of SelectController

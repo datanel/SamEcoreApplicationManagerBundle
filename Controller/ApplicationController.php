@@ -1,6 +1,6 @@
 <?php
 
-namespace CanalTP\Sam\Ecore\ApplicationManagerBundle\Controller;
+namespace CanalTP\SamEcoreApplicationManagerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

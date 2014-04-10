@@ -6,7 +6,7 @@
  * @author akambi
  */
 
-namespace CanalTP\Sam\Ecore\ApplicationManagerBundle\Command;
+namespace CanalTP\SamEcoreApplicationManagerBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;

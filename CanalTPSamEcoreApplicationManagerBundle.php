@@ -1,10 +1,10 @@
 <?php
 
-namespace CanalTP\Sam\Ecore\ApplicationManagerBundle;
+namespace CanalTP\SamEcoreApplicationManagerBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use CanalTP\Sam\Ecore\ApplicationManagerBundle\DependencyInjection\Compiler\CanalTPBusinessComponentCompilerPass;
+use CanalTP\SamEcoreApplicationManagerBundle\DependencyInjection\Compiler\CanalTPBusinessComponentCompilerPass;
 
 class CanalTPSamEcoreApplicationManagerBundle extends Bundle
 {

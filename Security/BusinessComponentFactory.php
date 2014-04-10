@@ -1,8 +1,8 @@
 <?php
 
-namespace CanalTP\Sam\Ecore\ApplicationManagerBundle\Security;
+namespace CanalTP\SamEcoreApplicationManagerBundle\Security;
 
-use CanalTP\Sam\Ecore\ApplicationManagerBundle\Security\BusinessComponentInterface;
+use CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessComponentInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Exception\LogicException;

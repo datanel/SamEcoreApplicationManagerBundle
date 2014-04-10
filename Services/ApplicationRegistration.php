@@ -6,7 +6,7 @@
  * @author akambi fagbohoun <contact@akambi-fagbohoun.com>
  */
 
-namespace CanalTP\Sam\Ecore\ApplicationManagerBundle\Services;
+namespace CanalTP\SamEcoreApplicationManagerBundle\Services;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Console\Output\OutputInterface;

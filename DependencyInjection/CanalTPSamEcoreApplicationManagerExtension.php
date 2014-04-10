@@ -1,6 +1,6 @@
 <?php
 
-namespace CanalTP\Sam\Ecore\ApplicationManagerBundle\DependencyInjection;
+namespace CanalTP\SamEcoreApplicationManagerBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

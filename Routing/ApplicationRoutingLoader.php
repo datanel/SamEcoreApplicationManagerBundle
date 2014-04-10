@@ -8,7 +8,7 @@
  * @author akambi
  * @author Kévin Ziemianski <kevin.ziemianski@canaltp.fr>
  */
-namespace CanalTP\Sam\Ecore\ApplicationManagerBundle\Routing;
+namespace CanalTP\SamEcoreApplicationManagerBundle\Routing;
 
 use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Routing\RouteCollection;

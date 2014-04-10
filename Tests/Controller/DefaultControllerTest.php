@@ -1,6 +1,6 @@
 <?php
 
-namespace CanalTP\Sam\Ecore\ApplicationManagerBundle\Tests\Controller;
+namespace CanalTP\SamEcoreApplicationManagerBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

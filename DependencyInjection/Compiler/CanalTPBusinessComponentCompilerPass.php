@@ -1,6 +1,6 @@
 <?php
 
-namespace CanalTP\Sam\Ecore\ApplicationManagerBundle\DependencyInjection\Compiler;
+namespace CanalTP\SamEcoreApplicationManagerBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -26,7 +26,7 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
         );
 
         $factoryDefinition = $container
-            ->register('sam.business_component', 'CanalTP\Sam\Ecore\ApplicationManagerBundle\Security\BusinessComponentFactory')
+            ->register('sam.business_component', 'CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessComponentFactory')
             ->addArgument(new Reference('doctrine.orm.entity_manager'))
             ->addArgument(new Reference('session'))
             ->addArgument('%session_app_key%');
@@ -65,7 +65,7 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
         }
 
         $factoryDefinition = $container
-                ->register('sam.business_component', 'CanalTP\Sam\Ecore\ApplicationManagerBundle\Security\BusinessComponentFactory')
+                ->register('sam.business_component', 'CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessComponentFactory')
                 ->addArgument(new Reference('doctrine.orm.entity_manager'))
                 ->addArgument(new Reference('session'))
                 ->addArgument('%session_app_key%');
