@@ -49,7 +49,7 @@ class PerimeterSubscriber implements EventSubscriberInterface
         $data = $event->getData();
 
         if ($data instanceof ApplicationRole) {
-            $app = strtolower($data->getApplication()->getName());
+            $app = $data->getApplication()->getCanonicalName();
             try {
                 $perimeters = $this->businessComponent->getBusinessComponent($app)->getPerimetersManager()->getPerimeters();
                 $this->AddPerimeterForm($data, $form, $perimeters);
