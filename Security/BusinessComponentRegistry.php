@@ -5,7 +5,7 @@ namespace CanalTP\SamEcoreApplicationManagerBundle\Security;
 use CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessComponentInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Form\Exception\LogicException;
+use CanalTP\SamEcoreApplicationManagerBundle\Exception\OutOfBoundsException;
 
 class BusinessComponentRegistry
 {
@@ -43,8 +43,6 @@ class BusinessComponentRegistry
            return $this->businessComponents[$application];
         }
 
-        throw new LogicException("No business component for ($application) application");
-
-        return;
+        throw new OutOfBoundsException(sprintf('business component for %s application not found', $application));
     }
 }
