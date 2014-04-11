@@ -13,6 +13,10 @@
         {
             "name": "Kévin ZIEMIANSKI",
             "email": "kevin.ziemianski@canaltp.fr"
+        },
+        {
+            "name": "David QUINTANEL",
+            "email": "david.quintanel@canaltp.fr"
         }
     ],
     "require": {

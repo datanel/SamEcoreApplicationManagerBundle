@@ -21,58 +21,31 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
         preg_match_all(
             "|(?P<namespace>[^,]*)\\\CanalTP(?P<application>[^\\\]*)BridgeBundle|U",
             implode(',', $container->getParameter('kernel.bundles')),
-            $aApplicationMetiers,
+            $applications,
             PREG_SET_ORDER
         );
 
         $factoryDefinition = $container
-            ->register('sam.business_component', 'CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessComponentFactory')
+            ->register('sam.business_component', 'CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessComponentRegistry')
             ->addArgument(new Reference('doctrine.orm.entity_manager'))
             ->addArgument(new Reference('session'))
             ->addArgument('%session_app_key%');
 
-        foreach ($aApplicationMetiers as $aApplicationMetier) {
-            $namespace            = $aApplicationMetier['namespace'];
-            $application          = strtolower($aApplicationMetier['application']);
-            $businessModuleId     = 'sam.business_module.' . $application;
-            $businessPermissionId = 'sam.business_permission_manager.' . $application;
-            $businessComponentId  = 'sam.business_component.' . $application;
+        foreach ($applications as $application) {
+            $applicationName = strtolower($application['application']);
 
-            // define business module service of this application
-            $container
-                    ->register($businessModuleId, $namespace . '\Security\BusinessModule')
-                    ->addArgument('%permissions%')
-                    ->setPublic(false);
-
-            // define business permission manager service of this application
-            $container
-                    ->register($businessPermissionId, $namespace . '\Security\BusinessPermissionManager')
-                    ->addArgument(new Reference($businessModuleId))
-                    ->setPublic(false);
-
-            // define business component service of this application
-            $container
-                ->register($businessComponentId, $namespace . '\Security\BusinessComponent')
-                    ->addArgument(new Reference($businessPermissionId))
-                    ->addArgument(new Reference('service_container'))
-                    ->setPublic(false)
-                    ->addTag('sam.business_component', array('application' => $application));
+            // @todo Remove
+            if (!$container->has('sam.business_component.' . $applicationName)) {
+                continue;
+            }
 
             $factoryDefinition->addMethodCall(
                 'addBusinessComponent',
-                array(new Reference($businessComponentId), $application)
+                array(
+                    $applicationName,
+                    new Reference('sam.business_component.' . $applicationName)
+                )
             );
         }
-
-        $factoryDefinition = $container
-                ->register('sam.business_component', 'CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessComponentFactory')
-                ->addArgument(new Reference('doctrine.orm.entity_manager'))
-                ->addArgument(new Reference('session'))
-                ->addArgument('%session_app_key%');
-
-            $factoryDefinition->addMethodCall(
-                'addBusinessComponent',
-                array(new Reference($businessComponentId), $application)
-            );
     }
 }
