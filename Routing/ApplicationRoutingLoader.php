@@ -59,6 +59,8 @@ class ApplicationRoutingLoader extends Loader
 //            $appRoutes->addPrefix('/'. strtolower($application));
             $importedRoutes->addPrefix('/'. strtolower($application));
 
+
+
 //            foreach ($importedRoutes as $routeName => $route) {
 //                $importedRoutes->add('sam_' . $this->routePrefix . '_' . $routeName, clone $route);
 //                $importedRoutes->remove($routeName);
