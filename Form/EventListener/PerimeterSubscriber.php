@@ -2,7 +2,7 @@
 
 namespace CanalTP\SamEcoreApplicationManagerBundle\Form\EventListener;
 
-use CanalTP\SamCoreBundle\Entity\ApplicationRole;
+use CanalTP\SamCoreBundle\Entity\UserApplicationRole;
 use CanalTP\SamEcoreApplicationManagerBundle\Exception\OutOfBoundsException;
 use CanalTP\SamEcoreUserManagerBundle\Entity\User;
 use CanalTP\SamEcoreUserManagerBundle\Form\DataTransformer\RoleToRolesTransformer;
