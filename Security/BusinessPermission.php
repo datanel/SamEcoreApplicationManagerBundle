@@ -30,7 +30,7 @@ class BusinessPermission implements BusinessPermissionInterface
 
     public function getDescription()
     {
-        return $this->name;
+        return $this->description;
     }
 
     public function setDescription($description)
