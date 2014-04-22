@@ -6,7 +6,8 @@ use CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessPermission;
 
 abstract class AbstractBusinessModule implements BusinessModuleInterface
 {
-    protected $permissions = null;
+    protected $permissions;
+    protected $permissionsObject;
 
     public function __construct($permissions)
     {
@@ -20,6 +21,10 @@ abstract class AbstractBusinessModule implements BusinessModuleInterface
 
     public function getPermissions()
     {
+        if (null !== $this->permissionsObject) {
+            return $this->permissionsObject;
+        }
+
         $permissions = array();
         foreach ($this->permissions as $key => $permission) {
             $model = new BusinessPermission();
@@ -29,6 +34,8 @@ abstract class AbstractBusinessModule implements BusinessModuleInterface
             $permissions[] = $model;
         }
 
-        return $permissions;
+        $this->permissionsObject = $permissions;
+
+        return $this->permissionsObject;
     }
 }
