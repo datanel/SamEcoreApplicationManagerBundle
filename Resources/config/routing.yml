@@ -5,3 +5,9 @@ canal_tp_sam_ecore_application_manager_choose_application:
 canal_tp_sam_ecore_application_manager_toolbar:
     pattern: /toolbar
     defaults: { _controller: CanalTPSamEcoreApplicationManagerBundle:Application:toolbar }
+
+canal_tp_sam_show_changelog:
+    pattern:  /{canonicalName}/CHANGELOG.md
+    defaults: { _controller: "CanalTPSamEcoreApplicationManagerBundle:Application:changelog" }
+    requirements:
+        canonicalName: -?[a-zA-Z]*

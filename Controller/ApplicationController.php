@@ -3,6 +3,8 @@
 namespace CanalTP\SamEcoreApplicationManagerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class ApplicationController extends Controller
 {
@@ -12,7 +14,6 @@ class ApplicationController extends Controller
         $oApplication = $em->getRepository('CanalTPSamCoreBundle:Application')->find($application);
         $appKey = $this->container->getParameter('session_app_key');
         $this->get('session')->set($appKey, $oApplication->getCanonicalName());
-//        $this->get('session')->set('selectedappname', strtoupper($oApplication->getName()));
 
         $defaultUrl = $oApplication->getDefaultRoute();
 
@@ -34,5 +35,24 @@ class ApplicationController extends Controller
             'CanalTPSamEcoreApplicationManagerBundle:Application:toolbar.html.twig',
             array('applications' => $aApplications)
         );
+    }
+
+    /**
+     * Display CHANGELOG.md file for each application
+     */
+    public function changelogAction(Request $request, $canonicalName)
+    {
+        $kernel = $this->get('kernel');
+        $em = $this->getDoctrine()->getManager();
+        $application = $em
+            ->getRepository('CanalTPSamCoreBundle:Application')
+            ->findOneByCanonicalName($canonicalName);
+
+        if (is_null($application)) {
+            throw new \Exception('Application (' . $canonicalName . ') not found.');
+        }
+        $path = $kernel->locateResource('@CanalTP' . $application->getName() . 'Bundle/CHANGELOG.md');
+
+        return new BinaryFileResponse($path);
     }
 }
