@@ -51,8 +51,11 @@ class ApplicationController extends Controller
         if (is_null($application)) {
             throw $this->createNotFoundException('Application (' . $canonicalName . ') not found.');
         }
-        $path = $kernel->locateResource('@CanalTP' . $application->getName() . 'Bundle/CHANGELOG.md');
-
+        try {
+            $path = $kernel->locateResource('@CanalTP' . $application->getName() . 'Bundle/CHANGELOG.md');
+        } catch (\InvalidArgumentException $e) {
+            throw $this->createNotFoundException('Changelog file for ' . $application->getName() . ' not found.');
+        }
         return new BinaryFileResponse($path);
     }
 }
