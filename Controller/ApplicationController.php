@@ -49,7 +49,7 @@ class ApplicationController extends Controller
             ->findOneByCanonicalName($canonicalName);
 
         if (is_null($application)) {
-            throw new \Exception('Application (' . $canonicalName . ') not found.');
+            throw $this->createNotFoundException('Application (' . $canonicalName . ') not found.');
         }
         $path = $kernel->locateResource('@CanalTP' . $application->getName() . 'Bundle/CHANGELOG.md');
 
