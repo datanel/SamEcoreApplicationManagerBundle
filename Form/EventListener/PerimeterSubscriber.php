@@ -54,6 +54,7 @@ class PerimeterSubscriber implements EventSubscriberInterface
                 $perimeters = $this->businessComponent->getBusinessComponent($app)->getPerimetersManager()->getPerimeters();
                 $this->AddPerimeterForm($data, $form, $perimeters);
             } catch (OutOfBoundsException $e) {
+            } catch (\Exception $e) {
             }
             $event->setData($data);
         }
