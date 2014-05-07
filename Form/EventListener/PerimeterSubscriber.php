@@ -2,7 +2,7 @@
 
 namespace CanalTP\SamEcoreApplicationManagerBundle\Form\EventListener;
 
-use CanalTP\SamCoreBundle\Entity\UserApplicationRole;
+use CanalTP\SamCoreBundle\Entity\Application;
 use CanalTP\SamEcoreApplicationManagerBundle\Exception\OutOfBoundsException;
 use CanalTP\SamEcoreUserManagerBundle\Entity\User;
 use CanalTP\SamEcoreUserManagerBundle\Form\DataTransformer\RoleToRolesTransformer;
@@ -48,8 +48,9 @@ class PerimeterSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
         $data = $event->getData();
 
-        if ($data instanceof ApplicationRole) {
-            $app = $data->getApplication()->getCanonicalName();
+        //if ($data instanceof Application) {
+            $app = $data->getCanonicalName();
+
             try {
                 $perimeters = $this->businessComponent->getBusinessComponent($app)->getPerimetersManager()->getPerimeters();
                 $this->AddPerimeterForm($data, $form, $perimeters);
@@ -57,7 +58,7 @@ class PerimeterSubscriber implements EventSubscriberInterface
             } catch (\Exception $e) {
             }
             $event->setData($data);
-        }
+        //}
     }
 
 
