@@ -29,7 +29,6 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
             ->register('sam.business_component', 'CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessComponentRegistry')
             ->addArgument(new Reference('doctrine.orm.entity_manager'))
             ->addArgument(new Reference('session'))
-            ->addArgument('%session_app_key%')
             ->addArgument(new Reference('canal_tp_sam.application.finder'));
 
         foreach ($applications as $application) {

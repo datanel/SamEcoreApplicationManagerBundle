@@ -11,15 +11,13 @@ class BusinessComponentRegistry
 {
     private $em;
     private $session;
-    private $appKey;
     private $appFinder;
     private $businessComponents = array();
 
-    public function __construct(EntityManager $em, Session $session, $appKey, $appFinder)
+    public function __construct(EntityManager $em, Session $session, $appFinder)
     {
         $this->em = $em;
         $this->session = $session;
-        $this->appKey = $appKey;
         $this->appFinder = $appFinder;
     }
 
