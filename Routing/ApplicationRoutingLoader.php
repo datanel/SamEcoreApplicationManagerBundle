@@ -57,7 +57,15 @@ class ApplicationRoutingLoader extends Loader
 //            $appRoutes = clone $importedRoutes;
 //            $appRoutes->addDefaults(array('_controller' => 'CanalTPSamBundle:Sam:AppRender'));
 //            $appRoutes->addPrefix('/'. strtolower($application));
-            $importedRoutes->addPrefix('/'. strtolower($application));
+
+            //Change sam to admin for url
+            if (strtolower($application) == 'sam') {
+                $importedRoutes->addPrefix('/admin');
+            } else {
+                $importedRoutes->addPrefix('/'. strtolower($application));
+            }
+
+
 
 
 

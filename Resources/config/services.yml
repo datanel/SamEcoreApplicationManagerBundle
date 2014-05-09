@@ -4,6 +4,8 @@ parameters:
     canal_tp_sam_ecore_route_prefix: 'business'
     canal_tp_sam_ecore_event_select_controller.class: 'CanalTP\SamEcoreApplicationManagerBundle\Component\EventListener\SelectController'
     canal_tp_sam.perimeter.form.listener.class: CanalTP\SamEcoreApplicationManagerBundle\Form\EventListener\PerimeterSubscriber
+    canal_tp_sam.application.finder: CanalTP\SamEcoreApplicationManagerBundle\Services\ApplicationFinder
+    canal_tp_sam.application.entity: CanalTP\SamCoreBundle\Entity\Application
 
 services:
     # Service d'enregistrement des applications
@@ -33,3 +35,10 @@ services:
         class: %canal_tp_sam.perimeter.form.listener.class%
         arguments:
             - @sam.business_component
+
+    canal_tp_sam.application.finder:
+        class: %canal_tp_sam.application.finder%
+        arguments:
+            - @request_stack
+            - @doctrine.orm.entity_manager
+            - %canal_tp_sam.application.entity%

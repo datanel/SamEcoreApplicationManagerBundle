@@ -12,8 +12,6 @@ class ApplicationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $oApplication = $em->getRepository('CanalTPSamCoreBundle:Application')->find($application);
-        $appKey = $this->container->getParameter('session_app_key');
-        $this->get('session')->set($appKey, $oApplication->getCanonicalName());
 
         $defaultUrl = $oApplication->getDefaultRoute();
 

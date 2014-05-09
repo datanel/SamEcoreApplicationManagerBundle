@@ -12,13 +12,15 @@ class BusinessComponentRegistry
     private $em;
     private $session;
     private $appKey;
+    private $appFinder;
     private $businessComponents = array();
 
-    public function __construct(EntityManager $em, Session $session, $appKey)
+    public function __construct(EntityManager $em, Session $session, $appKey, $appFinder)
     {
         $this->em = $em;
         $this->session = $session;
         $this->appKey = $appKey;
+        $this->appFinder = $appFinder;
     }
 
     public function addBusinessComponent($application, BusinessComponentInterface $businessComponent)
@@ -29,14 +31,11 @@ class BusinessComponentRegistry
     public function getBusinessComponent($application = null)
     {
         if ($application == null) {
-            if ($this->session->has($this->appKey)) {
-                $app_id = $this->session->get($this->appKey);
-                $oApplication = $this->em->getRepository('CanalTPSamCoreBundle:Application')
-                    ->findOneBy(array('canonicalName' => $app_id));
-                $application = $oApplication->getCanonicalName();
-            } else {
-                return;
-            }
+            $application = $this->appFinder->findFromUrl();
+
+            if (is_null($application)) throw new OutOfBoundsException(sprintf('business component for %s application not found', $application));
+
+            $application = $application->getCanonicalName();
         }
 
         if (array_key_exists($application, $this->businessComponents)) {
