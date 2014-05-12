@@ -2,19 +2,13 @@
 
 namespace CanalTP\SamEcoreApplicationManagerBundle\Form\EventListener;
 
-use CanalTP\SamCoreBundle\Entity\Application;
 use CanalTP\SamEcoreApplicationManagerBundle\Exception\OutOfBoundsException;
-use CanalTP\SamEcoreUserManagerBundle\Entity\User;
-use CanalTP\SamEcoreUserManagerBundle\Form\DataTransformer\RoleToRolesTransformer;
 
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ObjectChoiceList;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Security\Core\Role\Role;
-use Symfony\Component\Security\Core\Role\RoleHierarchy;
 use Symfony\Component\Security\Core\SecurityContext;
 
 class PerimeterSubscriber implements EventSubscriberInterface
@@ -48,17 +42,15 @@ class PerimeterSubscriber implements EventSubscriberInterface
         $form = $event->getForm();
         $data = $event->getData();
 
-        //if ($data instanceof Application) {
-            $app = $data->getCanonicalName();
+        $app = $data->getCanonicalName();
 
-            try {
-                $perimeters = $this->businessComponent->getBusinessComponent($app)->getPerimetersManager()->getPerimeters();
-                $this->AddPerimeterForm($data, $form, $perimeters);
-            } catch (OutOfBoundsException $e) {
-            } catch (\Exception $e) {
-            }
-            $event->setData($data);
-        //}
+        try {
+            $perimeters = $this->businessComponent->getBusinessComponent($app)->getPerimetersManager()->getPerimeters();
+            $this->AddPerimeterForm($data, $form, $perimeters);
+        } catch (OutOfBoundsException $e) {
+        } catch (\Exception $e) {
+        }
+        $event->setData($data);
     }
 
 
