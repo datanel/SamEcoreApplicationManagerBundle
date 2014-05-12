@@ -30,6 +30,13 @@ interface BusinessPerimeterManagerInterface
     public function deleteUserFromPerimeter(UserInterface $user, BusinessPerimeterInterface $perimeter);
 
     /**
+     * Delete all the perimeters of a user
+     *
+     * @param UserInterface $user
+     */
+    public function deleteUserPerimeters(UserInterface $user);
+
+    /**
      * Get a user's perimeters
      *
      * @param UserInterface $user
