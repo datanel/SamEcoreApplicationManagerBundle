@@ -35,6 +35,7 @@ services:
         class: %canal_tp_sam.perimeter.form.listener.class%
         arguments:
             - @sam.business_component
+            - @security.context
 
     canal_tp_sam.application.finder:
         class: %canal_tp_sam.application.finder%

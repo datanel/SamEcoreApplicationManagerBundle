@@ -14,10 +14,12 @@ use Symfony\Component\Security\Core\SecurityContext;
 class PerimeterSubscriber implements EventSubscriberInterface
 {
     protected $securityContext;
+    protected $businessComponent;
 
-    public function __construct($businessComponent)
+    public function __construct($businessComponent, $securityContext)
     {
         $this->businessComponent = $businessComponent;
+        $this->securityContext = $securityContext;
     }
 
     /**
@@ -43,10 +45,11 @@ class PerimeterSubscriber implements EventSubscriberInterface
         $data = $event->getData();
 
         $app = $data->getCanonicalName();
+        $disabledAllPerimeters = !$this->securityContext->isGranted('BUSINESS_MANAGE_USER_PERIMETER');
 
         try {
             $perimeters = $this->businessComponent->getBusinessComponent($app)->getPerimetersManager()->getPerimeters();
-            $this->AddPerimeterForm($data, $form, $perimeters);
+            $this->AddPerimeterForm($data, $form, $perimeters, $disabledAllPerimeters);
         } catch (OutOfBoundsException $e) {
         } catch (\Exception $e) {
         }
@@ -61,7 +64,7 @@ class PerimeterSubscriber implements EventSubscriberInterface
      * @param  type $form
      * @return type
      */
-    protected function AddPerimeterForm(&$data, &$form, $perimeters)
+    protected function AddPerimeterForm(&$data, &$form, $perimeters, $disabledAllPerimeters)
     {
         $choiceList = new ObjectChoiceList($perimeters, 'name');
         $form->add(
@@ -70,6 +73,7 @@ class PerimeterSubscriber implements EventSubscriberInterface
             array(
                 'choice_list' => $choiceList,
                 'expanded' => true,
+                'disabled' => $disabledAllPerimeters,
                 'multiple' => true
             )
         );
