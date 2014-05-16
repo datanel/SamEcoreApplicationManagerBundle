@@ -2,7 +2,8 @@
 
 namespace CanalTP\SamEcoreApplicationManagerBundle\Services;
 
-use \Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 
 /**
  * Allow to get application by several ways
@@ -15,14 +16,16 @@ class ApplicationFinder
     protected $requestStack;
     protected $em;
     protected $applicationEntityName;
+    protected $container;
 
     protected $currentApp = null;
 
-    public function __construct(RequestStack $rs, $em, $appEntityName) {
-
-        $this->requestStack = $rs;
-        $this->em = $em;
+    public function __construct($container, $appEntityName)
+    {
+        $this->requestStack = $container->get('request_stack');
+        $this->em = $container->get('doctrine.orm.entity_manager');
         $this->applicationEntityName = $appEntityName;
+        $this->container = $container;
     }
 
     public function findFromUrl()
@@ -30,14 +33,28 @@ class ApplicationFinder
         if (is_null($this->currentApp)) {
             $res = array();
             preg_match('/\/(\w+)/', $this->requestStack->getCurrentRequest()->getPathInfo(), $res);
-
-            //admin is a sam synonyme
-            if (strtolower($res[1]) == 'admin') {
-                $res[1] = 'sam';
+            $appName = '';
+            
+            if (empty($res)) {
+                //Get first user's app
+                $userRoles = $this->container->get('security.context')->getToken()->getUser()->getUserRoles();
+                
+                if (empty($userRoles)) {
+                    throw new AccessDeniedException('Votre profil n\'a pas de rôle. Contactez un administrateur.');
+                }
+                
+                $appName = $userRoles->first()->getApplication()->getCanonicalName();
+            } else {
+                $appName = strtolower($res[1]);
             }
-
-            $app = $this->em->getRepository($this->applicationEntityName)->findOneBy(array('canonicalName' => $res[1]));
-
+            
+            //admin is a sam synonyme
+            if ($appName == 'admin') {
+                $appName = 'sam';
+            }
+            
+            $app = $this->em->getRepository($this->applicationEntityName)->findOneBy(array('canonicalName' => $appName));
+            
             $this->currentApp = $app;
         }
 
