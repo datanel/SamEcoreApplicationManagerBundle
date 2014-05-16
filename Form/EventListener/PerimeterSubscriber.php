@@ -45,7 +45,7 @@ class PerimeterSubscriber implements EventSubscriberInterface
         $data = $event->getData();
 
         $app = $data->getCanonicalName();
-        $disabledAllPerimeters = !$this->securityContext->isGranted('BUSINESS_MANAGE_USER_PERIMETER');
+        $disabledAllPerimeters = !$this->securityContext->isGranted('BUSINESS_MANAGE_PERIMETER');
 
         try {
             $perimeters = $this->businessComponent->getBusinessComponent($app)->getPerimetersManager()->getPerimeters();
