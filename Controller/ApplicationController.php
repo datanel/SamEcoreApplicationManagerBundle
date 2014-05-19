@@ -27,7 +27,7 @@ class ApplicationController extends Controller
     public function toolbarAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $aApplications = $em->getRepository('CanalTPSamCoreBundle:Application')->findAll();
+        $aApplications = $em->getRepository('CanalTPSamCoreBundle:Application')->findByUser($this->getUser());
 
         return $this->render(
             'CanalTPSamEcoreApplicationManagerBundle:Application:toolbar.html.twig',
