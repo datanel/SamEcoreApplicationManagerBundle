@@ -1,36 +1,16 @@
-<!-- Left Nav Section -->
-{{ knp_menu_render('CanalTPSamBundle:Builder:mainMenu') }}
-
-<!-- Right Nav Section -->
-<ul class="nav navbar-nav navbar-right">
-    <li class="dropdown">
-        <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-             <span class="glyphicon glyphicon-th"></span>
-             {{ 'layout.choose_application'|trans({}, 'messages') }}
-             <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu pull-right" role="menu">
-            {% for application in applications %}
-            <li class="">
-                <a class="btn" href="{{ path('canal_tp_sam_ecore_application_manager_choose_application', {application : application.id}) }}">
-                    {{ application.name }}
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
-    </li>
-    <li class="dropdown">
-        <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-             <span class="glyphicon glyphicon-user"></span>
-            {{ app.user.username }}
-             <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu pull-right" role="menu">
-            <li class="">
-                <a class="btn" href="{{ path('fos_user_security_logout') }}">
-                    <span class="glyphicon glyphicon-off"></span> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                </a>
-            </li>
-        </ul>
-    </li>                        
-</ul>
+<li class="dropdown">
+    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+        <span class="glyphicon glyphicon-th"></span>
+            {{ 'layout.choose_application'|trans({}, 'messages') }}
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu pull-right" role="menu">
+        {% for application in applications %}
+        <li class="">
+            <a class="btn" href="{{ path('canal_tp_sam_ecore_application_manager_choose_application', {application : application.id}) }}">
+                {{ application.name }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</li>
