@@ -52,6 +52,8 @@ class ApplicationRoutingLoader extends Loader
 
             $importedRoutes = $this->import($resource,
                                             $type);
+            
+            //@TODO : #IUS-162
             //$appRoutes : business routes, but redirect all to sam controller
             //$importedRoutes : business routes renamed, but still with the good business controller
 //            $appRoutes = clone $importedRoutes;
