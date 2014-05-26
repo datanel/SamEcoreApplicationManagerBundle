@@ -27,12 +27,17 @@ class ApplicationController extends Controller
     public function toolbarAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $aApplications = $em->getRepository('CanalTPSamCoreBundle:Application')->findByUser($this->getUser());
-
-        return $this->render(
-            'CanalTPSamEcoreApplicationManagerBundle:Application:toolbar.html.twig',
-            array('applications' => $aApplications)
-        );
+        $applications = $em->getRepository('CanalTPSamCoreBundle:Application')->findByUser($this->getUser());
+        
+        if (count($applications) > 1) {
+            return $this->render(
+                'CanalTPSamEcoreApplicationManagerBundle:Application:toolbar.html.twig',
+                array('applications' => $applications)
+            );
+        } else {
+            //Only one apps, so don't display menu
+            return new \Symfony\Component\HttpFoundation\Response();
+        }
     }
 
     /**
