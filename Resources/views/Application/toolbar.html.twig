@@ -1,8 +1,6 @@
 <li class="dropdown">
-    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-        <span class="glyphicon glyphicon-th"></span>
-            {{ 'layout.choose_application'|trans({}, 'messages') }}
-        <span class="caret"></span>
+    <a class="dropdown-toggle" title="{{ 'layout.choose_application'|trans({}, 'messages') }}" href="#" data-toggle="dropdown">
+        <span class="glyphicon glyphicon-th-large"></span>
     </a>
     <ul class="dropdown-menu pull-right" role="menu">
         {% for application in applications %}
