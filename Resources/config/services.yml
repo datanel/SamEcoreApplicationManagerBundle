@@ -36,6 +36,7 @@ services:
         arguments:
             - @sam.business_component
             - @security.context
+            - @fos_user.user_manager
 
     canal_tp_sam.application.finder:
         class: %canal_tp_sam.application.finder%

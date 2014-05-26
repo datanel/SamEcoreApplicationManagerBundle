@@ -3,6 +3,7 @@
 namespace CanalTP\SamEcoreApplicationManagerBundle\Form\EventListener;
 
 use CanalTP\SamEcoreApplicationManagerBundle\Exception\OutOfBoundsException;
+use FOS\UserBundle\Model\UserManagerInterface;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ObjectChoiceList;
@@ -16,10 +17,11 @@ class PerimeterSubscriber implements EventSubscriberInterface
     protected $securityContext;
     protected $businessComponent;
 
-    public function __construct($businessComponent, $securityContext)
+    public function __construct($businessComponent, $securityContext, UserManagerInterface $userManager)
     {
         $this->businessComponent = $businessComponent;
         $this->securityContext = $securityContext;
+        $this->userManager = $userManager;
     }
 
     /**
@@ -46,9 +48,15 @@ class PerimeterSubscriber implements EventSubscriberInterface
 
         $app = $data->getCanonicalName();
         $disabledAllPerimeters = !$this->securityContext->isGranted('BUSINESS_MANAGE_USER_PERIMETER');
-        
+
         try {
-            $perimeters = $this->businessComponent->getBusinessComponent($app)->getPerimetersManager()->getPerimeters();
+            $user = $this->securityContext->getToken()->getUser();
+            $perimeterManager = $this->businessComponent->getBusinessComponent($app)->getPerimetersManager();
+
+            $perimeters = $user->isSuperAdmin()
+                ? $perimeters = $perimeterManager->getPerimeters()
+                : $perimeters = $perimeterManager->getUserPerimeters($user);
+
             $this->AddPerimeterForm($data, $form, $perimeters, $disabledAllPerimeters);
         } catch (OutOfBoundsException $e) {
         } catch (\Exception $e) {
