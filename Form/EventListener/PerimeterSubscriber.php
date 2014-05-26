@@ -53,8 +53,6 @@ class PerimeterSubscriber implements EventSubscriberInterface
             $user = $this->securityContext->getToken()->getUser();
             $perimeterManager = $this->businessComponent->getBusinessComponent($app)->getPerimetersManager();
 
-            // @todo override isSuperAdmin, add a boolean field (usr_is_super_admin) in the user table
-            // @todo change the fixtures
             $perimeters = $user->isSuperAdmin()
                 ? $perimeters = $perimeterManager->getPerimeters()
                 : $perimeters = $perimeterManager->getUserPerimeters($user);
