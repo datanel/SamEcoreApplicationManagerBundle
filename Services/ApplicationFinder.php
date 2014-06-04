@@ -34,30 +34,45 @@ class ApplicationFinder
             $res = array();
             preg_match('/\/(\w+)/', $this->requestStack->getCurrentRequest()->getPathInfo(), $res);
             $appName = '';
-            
+
             if (empty($res)) {
                 //Get first user's app
                 $userRoles = $this->container->get('security.context')->getToken()->getUser()->getUserRoles();
-                
+
                 if (empty($userRoles)) {
                     throw new AccessDeniedException('Votre profil n\'a pas de rôle. Contactez un administrateur.');
                 }
-                
+
                 $appName = $userRoles->first()->getApplication()->getCanonicalName();
             } else {
                 $appName = strtolower($res[1]);
             }
-            
+
             //admin is a sam synonyme
             if ($appName == 'admin') {
                 $appName = 'sam';
             }
-            
+
             $app = $this->em->getRepository($this->applicationEntityName)->findOneBy(array('canonicalName' => $appName));
-            
+
             $this->currentApp = $app;
         }
 
         return $this->currentApp;
+    }
+
+    public function getCurrentApp()
+    {
+        if ($this->requestStack->getCurrentRequest()->query->has('app')) {
+            $app = $this->em->getRepository($this->applicationEntityName)->findOneBy(
+                array(
+                    'canonicalName' => $this->requestStack->getCurrentRequest()->query->get('app')
+                )
+            );
+            $this->currentApp = $app;
+        } else {
+            $this->findFromUrl();
+        }
+            return ($this->currentApp);
     }
 }
