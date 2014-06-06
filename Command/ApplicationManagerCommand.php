@@ -30,5 +30,13 @@ class ApplicationManagerCommand extends ContainerAwareCommand
     {
         $this->container = $this->getApplication()->getKernel()->getContainer();
         $em = $this->container->get('canal_tp_sam_ecore_application_registration')->register($output);
+        
+        /**
+         * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+         * A chaque insertion d'une application:
+         *      Créer un role SUPER_ADMIN et lui associer toutes les permissions
+         * 
+         * 
+         */
     }
 }
