@@ -54,8 +54,6 @@ class ApplicationFinder
             }
 
             $app = $this->em->getRepository($this->applicationEntityName)->findOneBy(array('canonicalName' => $appName));
-
-            debug($appName);
             
             $this->currentApp = $app;
         }
