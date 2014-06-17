@@ -61,6 +61,7 @@ class PerimeterSubscriber implements EventSubscriberInterface
         } catch (OutOfBoundsException $e) {
         } catch (\Exception $e) {
         }
+        
         $event->setData($data);
     }
 
