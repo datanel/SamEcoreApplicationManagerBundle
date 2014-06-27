@@ -32,7 +32,7 @@ class ApplicationFinder
     {
         if (is_null($this->currentApp)) {
             $res = array();
-            preg_match('/\/(\w+)/', $this->requestStack->getCurrentRequest()->getPathInfo(), $res);
+            preg_match('/\/(\w+)/', $this->requestStack->getMasterRequest()->getPathInfo(), $res);
             $appName = '';
 
             if (empty($res)) {
@@ -54,7 +54,7 @@ class ApplicationFinder
             }
 
             $app = $this->em->getRepository($this->applicationEntityName)->findOneBy(array('canonicalName' => $appName));
-
+            
             $this->currentApp = $app;
         }
 
