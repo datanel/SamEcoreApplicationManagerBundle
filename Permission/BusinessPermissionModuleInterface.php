@@ -2,7 +2,7 @@
 
 namespace CanalTP\SamEcoreApplicationManagerBundle\Security;
 
-interface BusinessModuleInterface extends CommonBusinessInterface
+interface BusinessPermissionModuleInterface extends CommonBusinessInterface
 {
     /**
      * Get the permissions

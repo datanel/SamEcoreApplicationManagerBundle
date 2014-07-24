@@ -1,6 +1,6 @@
 <?php
 
-namespace CanalTP\SamEcoreApplicationManagerBundle\Security;
+namespace CanalTP\SamEcoreApplicationManagerBundle\Component;
 
 use CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessComponentInterface;
 use Symfony\Component\HttpFoundation\Session\Session;

@@ -1,6 +1,8 @@
 <?php
 
-namespace CanalTP\SamEcoreApplicationManagerBundle\Security;
+namespace CanalTP\SamEcoreApplicationManagerBundle\Menu;
+
+use CanalTP\SamEcoreApplicationManagerBundle\CommonBusinessInterface;
 
 interface BusinessMenuItemInterface extends CommonBusinessInterface
 {

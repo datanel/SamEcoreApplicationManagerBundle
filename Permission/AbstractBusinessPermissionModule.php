@@ -4,12 +4,12 @@ namespace CanalTP\SamEcoreApplicationManagerBundle\Security;
 
 use CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessPermission;
 
-abstract class AbstractBusinessModule implements BusinessModuleInterface
+abstract class AbstractBusinessPermissionModule implements BusinessPermissionModuleInterface
 {
     protected $permissions;
     protected $permissionsObject;
 
-    public function __construct($permissions)
+    public function __construct(array $permissions)
     {
         $this->permissions = $permissions;
     }
