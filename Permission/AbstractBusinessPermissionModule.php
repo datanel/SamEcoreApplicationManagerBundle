@@ -1,6 +1,6 @@
 <?php
 
-namespace CanalTP\SamEcoreApplicationManagerBundle\Security;
+namespace CanalTP\SamEcoreApplicationManagerBundle\Permission;
 
 use CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessPermission;
 

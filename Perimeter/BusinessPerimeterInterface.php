@@ -1,6 +1,6 @@
 <?php
 
-namespace CanalTP\SamEcoreApplicationManagerBundle\Security;
+namespace CanalTP\SamEcoreApplicationManagerBundle\Perimeter;
 
 interface BusinessPerimeterInterface extends CommonBusinessInterface
 {
