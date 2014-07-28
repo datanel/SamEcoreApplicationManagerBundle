@@ -2,19 +2,21 @@
 
 namespace CanalTP\SamEcoreApplicationManagerBundle\Perimeter;
 
+use FOS\UserBundle\Model\UserInterface;
+
 abstract class AbstractBusinessPerimeterManager implements BusinessPerimeterManagerInterface
 {
-    public function addUserToPerimeter(\FOS\UserBundle\Model\UserInterface $user, BusinessPerimeterInterface $perimeter)
+    public function addUserToPerimeter(UserInterface $user, BusinessPerimeterInterface $perimeter)
     {
         return false;
     }
 
-    public function deleteUserFromPerimeter(\FOS\UserBundle\Model\UserInterface $user, BusinessPerimeterInterface $perimeter)
+    public function deleteUserFromPerimeter(UserInterface $user, BusinessPerimeterInterface $perimeter)
     {
         return false;
     }
 
-    public function deleteUserPerimeters(\FOS\UserBundle\Model\UserInterface $user)
+    public function deleteUserPerimeters(UserInterface $user)
     {
         return false;
     }
@@ -24,8 +26,18 @@ abstract class AbstractBusinessPerimeterManager implements BusinessPerimeterMana
         return array();
     }
 
-    public function getUserPerimeters(\FOS\UserBundle\Model\UserInterface $user)
+    public function getUserPerimeters(UserInterface $user)
     {
         return array();
+    }
+    
+    public function getId()
+    {
+        return null;
+    }
+
+    public function getName()
+    {
+        return '';
     }
 }

@@ -2,7 +2,7 @@
 
 namespace CanalTP\SamEcoreApplicationManagerBundle\Component;
 
-use CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessComponentInterface;
+use CanalTP\SamEcoreApplicationManagerBundle\Component\BusinessComponentInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Doctrine\ORM\EntityManager;
 use CanalTP\SamEcoreApplicationManagerBundle\Exception\OutOfBoundsException;

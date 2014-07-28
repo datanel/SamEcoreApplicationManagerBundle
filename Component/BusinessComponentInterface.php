@@ -2,6 +2,8 @@
 
 namespace CanalTP\SamEcoreApplicationManagerBundle\Component;
 
+use CanalTP\SamEcoreApplicationManagerBundle\CommonBusinessInterface;
+
 interface BusinessComponentInterface extends CommonBusinessInterface
 {
     /**

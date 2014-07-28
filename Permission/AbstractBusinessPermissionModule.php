@@ -2,7 +2,7 @@
 
 namespace CanalTP\SamEcoreApplicationManagerBundle\Permission;
 
-use CanalTP\SamEcoreApplicationManagerBundle\Security\BusinessPermission;
+use CanalTP\SamEcoreApplicationManagerBundle\Permission\BusinessPermission;
 
 abstract class AbstractBusinessPermissionModule implements BusinessPermissionModuleInterface
 {
@@ -37,5 +37,15 @@ abstract class AbstractBusinessPermissionModule implements BusinessPermissionMod
         $this->permissionsObject = $permissions;
 
         return $this->permissionsObject;
+    }
+    
+    public function getId()
+    {
+        return null;
+    }
+
+    public function getName()
+    {
+        return '';
     }
 }

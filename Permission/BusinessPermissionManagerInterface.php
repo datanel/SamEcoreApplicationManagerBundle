@@ -2,7 +2,9 @@
 
 namespace CanalTP\SamEcoreApplicationManagerBundle\Permission;
 
-interface BusinessPermissionManagerInterface
+use CanalTP\SamEcoreApplicationManagerBundle\CommonBusinessInterface;
+
+interface BusinessPermissionManagerInterface extends CommonBusinessInterface
 {
     public function getPermissionManagementMode();
     public function getBusinessObjectTypes();

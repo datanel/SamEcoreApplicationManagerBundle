@@ -20,4 +20,14 @@ abstract class AbstractBusinessPermissionManager implements BusinessPermissionMa
     {
         return null;
     }
+    
+    public function getId()
+    {
+        return null;
+    }
+
+    public function getName()
+    {
+        return '';
+    }
 }

@@ -8,7 +8,7 @@ abstract class AbstractBusinessComponent implements BusinessComponentInterface
 {
     public function getMenuItems()
     {
-        return null;
+        return array();
     }
 
     public function getPerimetersManager()
@@ -25,4 +25,14 @@ abstract class AbstractBusinessComponent implements BusinessComponentInterface
     {
         return false;
     }
+    
+    public function getId() {
+        return '';
+    }
+
+    public function getName()
+    {
+        return '';
+    }
+    
 }

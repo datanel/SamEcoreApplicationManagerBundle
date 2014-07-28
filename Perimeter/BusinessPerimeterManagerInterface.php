@@ -3,8 +3,9 @@
 namespace CanalTP\SamEcoreApplicationManagerBundle\Perimeter;
 
 use FOS\UserBundle\Model\UserInterface;
+use CanalTP\SamEcoreApplicationManagerBundle\CommonBusinessInterface;
 
-interface BusinessPerimeterManagerInterface
+interface BusinessPerimeterManagerInterface extends CommonBusinessInterface
 {
     /**
      * Add a user to a perimeter
