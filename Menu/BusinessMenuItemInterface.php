@@ -10,4 +10,6 @@ interface BusinessMenuItemInterface extends CommonBusinessInterface
     public function getAction();
     public function getRoute();
     public function getParameters();
+    public function setActive($isActive);
+    public function isActive();
 }

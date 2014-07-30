@@ -4,6 +4,8 @@ namespace CanalTP\SamEcoreApplicationManagerBundle\Menu;
 
 abstract class AbstractBusinessMenuItem implements BusinessMenuItemInterface 
 {
+    protected $isActive;
+
     public function getAction()
     {
         return null;
@@ -32,5 +34,15 @@ abstract class AbstractBusinessMenuItem implements BusinessMenuItemInterface
     public function getRoute()
     {
         return null;
+    }
+    
+    public function setActive($isActive)
+    {
+        $this->isActive = $isActive;
+    }
+    
+    public function isActive()
+    {
+        return $this->isActive;
     }
 }

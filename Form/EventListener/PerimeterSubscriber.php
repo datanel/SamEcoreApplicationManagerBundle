@@ -52,9 +52,9 @@ class PerimeterSubscriber implements EventSubscriberInterface
             $perimeterManager = $this->businessComponent->getBusinessComponent($app)->getPerimetersManager();
 
             $perimeters = $user->isSuperAdmin()
-                ? $perimeters = $perimeterManager->getPerimeters()
-                : $perimeters = $perimeterManager->getUserPerimeters($user);
-
+                ? $perimeterManager->getPerimeters()
+                : $perimeterManager->getUserPerimeters($user);
+            
             $this->AddPerimeterForm($data, $form, $perimeters, $disabledAllPerimeters);
         } catch (OutOfBoundsException $e) {
         } catch (\Exception $e) {
