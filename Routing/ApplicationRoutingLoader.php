@@ -50,35 +50,40 @@ class ApplicationRoutingLoader extends Loader
             $resource = '@CanalTP' . $application . 'BridgeBundle/Resources/config/routing.yml';
             $type     = 'yaml';
 
-            $importedRoutes = $this->import($resource,
-                                            $type);
+            try {
+                $importedRoutes = $this->import($resource, $type);
             
-            //@TODO : #IUS-162
-            //$appRoutes : business routes, but redirect all to sam controller
-            //$importedRoutes : business routes renamed, but still with the good business controller
-//            $appRoutes = clone $importedRoutes;
-//            $appRoutes->addDefaults(array('_controller' => 'CanalTPSamBundle:Sam:AppRender'));
-//            $appRoutes->addPrefix('/'. strtolower($application));
+            
+                //@TODO : #IUS-162
+                //$appRoutes : business routes, but redirect all to sam controller
+                //$importedRoutes : business routes renamed, but still with the good business controller
+                //$appRoutes = clone $importedRoutes;
+                //$appRoutes->addDefaults(array('_controller' => 'CanalTPSamCoreBundle:Sam:AppRender'));
+                //$appRoutes->addPrefix('/'. strtolower($application));
 
-            //Change sam to admin for url
-            if (strtolower($application) == 'sam') {
-                $importedRoutes->addPrefix('/admin');
-            } else {
-                $importedRoutes->addPrefix('/'. strtolower($application));
+                //Change sam to admin for url
+                if (strtolower($application) == 'sam') {
+                    $importedRoutes->addPrefix('/admin');
+                } else {
+                    $importedRoutes->addPrefix('/'. strtolower($application));
+                }
+
+
+
+
+
+    //            foreach ($importedRoutes as $routeName => $route) {
+    //                $importedRoutes->add('sam_' . $this->routePrefix . '_' . $routeName, clone $route);
+    //                $importedRoutes->remove($routeName);
+    //            }
+
+    //            $importedRoutes->addPrefix('/' . $this->routePrefix . '-'. strtolower($application));
+                $collection->addCollection($importedRoutes);
+    //            $collection->addCollection($appRoutes);
+            
+            } catch(\InvalidArgumentException $e) {
+                //No routing for this bundle, skip
             }
-
-
-
-
-
-//            foreach ($importedRoutes as $routeName => $route) {
-//                $importedRoutes->add('sam_' . $this->routePrefix . '_' . $routeName, clone $route);
-//                $importedRoutes->remove($routeName);
-//            }
-
-//            $importedRoutes->addPrefix('/' . $this->routePrefix . '-'. strtolower($application));
-            $collection->addCollection($importedRoutes);
-//            $collection->addCollection($appRoutes);
         }
 
         return $collection;
