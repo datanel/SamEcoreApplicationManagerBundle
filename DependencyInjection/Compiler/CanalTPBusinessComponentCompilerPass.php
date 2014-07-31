@@ -33,7 +33,7 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
 
         foreach ($applications as $application) {
             $applicationName = strtolower($application['application']);
-
+            
             // @todo Remove
             if (!$container->has('sam.business_component.' . $applicationName)) {
                 continue;

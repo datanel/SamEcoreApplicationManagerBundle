@@ -62,7 +62,7 @@ class ApplicationRoutingLoader extends Loader
                 //$appRoutes->addPrefix('/'. strtolower($application));
 
                 //Change sam to admin for url
-                if (strtolower($application) == 'sam') {
+                if (strtolower($application) == 'samcore') {
                     $importedRoutes->addPrefix('/admin');
                 } else {
                     $importedRoutes->addPrefix('/'. strtolower($application));

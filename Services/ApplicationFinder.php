@@ -50,7 +50,7 @@ class ApplicationFinder
 
             //admin is a sam synonyme
             if ($appName == 'admin') {
-                $appName = 'sam';
+                $appName = 'samcore';
             }
 
             $app = $this->em->getRepository($this->applicationEntityName)->findOneBy(array('canonicalName' => $appName));
