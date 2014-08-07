@@ -2,10 +2,10 @@ parameters:
     canal_tp_sam_ecore_application_registration.class: CanalTP\SamEcoreApplicationManagerBundle\Services\ApplicationRegistration
     canal_tp_sam_ecore_routing_loader.class: CanalTP\SamEcoreApplicationManagerBundle\Routing\ApplicationRoutingLoader
     canal_tp_sam_ecore_route_prefix: 'business'
-    canal_tp_sam_ecore_event_select_controller.class: 'CanalTP\SamEcoreApplicationManagerBundle\Component\EventListener\SelectController'
     canal_tp_sam.perimeter.form.listener.class: CanalTP\SamEcoreApplicationManagerBundle\Form\EventListener\PerimeterSubscriber
     canal_tp_sam.application.finder: CanalTP\SamEcoreApplicationManagerBundle\Services\ApplicationFinder
     canal_tp_sam.application.entity: CanalTP\SamCoreBundle\Entity\Application
+    sam.event.check_access.class: CanalTP\SamEcoreApplicationManagerBundle\Event\CheckAccess
 
 services:
     # Service d'enregistrement des applications
@@ -23,11 +23,10 @@ services:
         tags:
             - { name: routing.loader }
 
-    canal_tp_sam.component.select_controller:
-        class: %canal_tp_sam_ecore_event_select_controller.class%
+    sam.event.check_access:
+        class: %sam.event.check_access.class%
         arguments:
-            - '@router'
-            - '%canal_tp_sam_ecore_route_prefix%'
+            - '@service_container'
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 

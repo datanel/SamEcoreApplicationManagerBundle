@@ -48,7 +48,7 @@ class ApplicationFinder
                 $appName = strtolower($res[1]);
             }
 
-            //admin is a sam synonyme
+            //admin is a sam synonym
             if ($appName == 'admin') {
                 $appName = 'samcore';
             }
@@ -74,5 +74,16 @@ class ApplicationFinder
             $this->findFromUrl();
         }
             return ($this->currentApp);
+    }
+    
+    public function getUserApps(\FOS\UserBundle\Model\UserInterface $user)
+    {
+        $apps = array();
+        foreach ($user->getUserRoles() as $role) {
+            $app = $role->getApplication();
+            $apps[$app->getId()] = $app->getCanonicalName() == 'samcore' ? 'admin' : $app->getCanonicalName();
+        }
+        
+        return $apps;
     }
 }

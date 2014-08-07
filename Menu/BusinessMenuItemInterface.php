@@ -12,4 +12,6 @@ interface BusinessMenuItemInterface extends CommonBusinessInterface
     public function getParameters();
     public function setActive($isActive);
     public function isActive();
+    public function addAttribute(array $attr);
+    public function getAttributes();
 }
