@@ -11,12 +11,23 @@ abstract class AbstractBusinessPermissionModule implements BusinessPermissionMod
 
     public function __construct(array $permissions)
     {
+
         $this->permissions = $permissions;
     }
 
     public function getNumberPermissions()
     {
         return count($this->permissions);
+    }
+
+    private function createBusinessPermission($label, $description, $key)
+    {
+        $businessPermission = new BusinessPermission();
+        $businessPermission->setName($label);
+        $businessPermission->setDescription($description);
+        $businessPermission->setId($key);
+
+        return ($businessPermission);
     }
 
     public function getPermissions()
@@ -27,18 +38,23 @@ abstract class AbstractBusinessPermissionModule implements BusinessPermissionMod
 
         $permissions = array();
         foreach ($this->permissions as $key => $permission) {
-            $model = new BusinessPermission();
-            $model->setName($permission['label']);
-            $model->setDescription($permission['description']);
-            $model->setId($key);
-            $permissions[] = $model;
+            $permissions[] = $this->createBusinessPermission(
+                $permission['label'],
+                $permission['description'],
+                $key
+            );
         }
+        $permissions[] = $this->createBusinessPermission(
+            'permissions.business_manage_user_role.label',
+            'permissions.business_manage_user_role.description',
+            'BUSINESS_MANAGE_USER_ROLE'
+        );
 
         $this->permissionsObject = $permissions;
 
         return $this->permissionsObject;
     }
-    
+
     public function getId()
     {
         return null;
