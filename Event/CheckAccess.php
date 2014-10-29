@@ -42,9 +42,9 @@ class CheckAccess
             return;
         }
 
-        // if (!in_array($matches[1], $userApps)) {
-        //     throw new AccessDeniedException();
-        // }
+        if (!in_array($matches[1], $userApps) && $route != 'fos_user_security_login') {
+            throw new AccessDeniedException();
+        }
 
         return true;
     }
