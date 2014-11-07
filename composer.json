@@ -3,7 +3,7 @@
     "type": "symfony-bundle",
     "description": "Sam e-core application bundle",
     "keywords": ["sam", "application", "manager"],
-    "homepage": "http://hg.prod.canaltp.fr/Sam/CanalTPSamEcoreApplicationManagerBundle.git",
+    "homepage": "https://github.com/CanalTP/SamEcoreApplicationManagerBundle",
     "license": "MIT",
     "authors": [
         {
