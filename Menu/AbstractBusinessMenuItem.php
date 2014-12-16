@@ -2,10 +2,11 @@
 
 namespace CanalTP\SamEcoreApplicationManagerBundle\Menu;
 
-abstract class AbstractBusinessMenuItem implements BusinessMenuItemInterface 
+abstract class AbstractBusinessMenuItem implements BusinessMenuItemInterface
 {
     protected $isActive;
     protected $attributes = array();
+    protected $routePatternForHighlight = array();
 
     public function getAction()
     {
@@ -36,24 +37,39 @@ abstract class AbstractBusinessMenuItem implements BusinessMenuItemInterface
     {
         return null;
     }
-    
+
     public function setActive($isActive = true)
     {
         $this->isActive = $isActive;
     }
-    
-    public function isActive()
+
+    public function isActive($route = '')
     {
-        return $this->isActive;
+        if (isset($this->isActive)) {
+            return $this->isActive;
+        }
+
+        foreach ($this->routePatternForHighlight as $routePattern) {
+            if ($routePattern != '' && preg_match($routePattern, $route)) {
+                return true;
+            }
+        }
+
+        return false;
     }
-    
-    public function addAttribute(array $attr) 
+
+    public function addAttribute(array $attr)
     {
         $this->attributes += $attr;
     }
-    
+
     public function getAttributes()
     {
         return $this->attributes;
+    }
+
+    public function setRoutePatternForHighlight($pattern)
+    {
+        $this->routePatternForHighlight = $pattern;
     }
 }
