@@ -28,7 +28,7 @@ class ApplicationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $applications = $em->getRepository('CanalTPSamCoreBundle:Application')->findByUser($this->getUser());
-        
+
         if (count($applications) > 1) {
             return $this->render(
                 'CanalTPSamEcoreApplicationManagerBundle:Application:toolbar.html.twig',
@@ -55,7 +55,7 @@ class ApplicationController extends Controller
             throw $this->createNotFoundException('Application (' . $canonicalName . ') not found.');
         }
         try {
-            $path = $kernel->locateResource('@CanalTP' . $application->getName() . 'Bundle/CHANGELOG.md');
+            $path = $kernel->locateResource('@' . $application->getBundleName() . '/CHANGELOG.md');
         } catch (\InvalidArgumentException $e) {
             throw $this->createNotFoundException('Changelog file for ' . $application->getName() . ' not found.');
         }
