@@ -29,6 +29,7 @@ class CheckAccess
         }
         $user = $token->getUser();
         $route = $event->getRequest()->attributes->get('_route');
+        $routeAuthorized = array('fos_user_security_login', 'sam_user_edit_profil');
         $appService = $this->container->get('canal_tp_sam.application.finder');
 
         if (!$user instanceof UserInterface) {
@@ -42,7 +43,7 @@ class CheckAccess
             return;
         }
 
-        if (!in_array($matches[1], $userApps) && $route != 'fos_user_security_login') {
+        if (!in_array($matches[1], $userApps) && !in_array($route, $routeAuthorized)) {
             throw new AccessDeniedException();
         }
 
