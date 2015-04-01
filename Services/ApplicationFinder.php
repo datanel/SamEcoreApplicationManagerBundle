@@ -86,4 +86,26 @@ class ApplicationFinder
         
         return $apps;
     }
+
+    public function getBridgeApplicationBundles()
+    {
+        $applications = array();
+
+        $bridges = preg_grep(
+            "|BridgeBundle|U",
+            $this->container->getParameter('kernel.bundles')
+        );
+
+        foreach ($bridges as $bridge)
+        {
+            $application = array(
+                'bridge'    => preg_replace('/^.+\\\\(\w+BridgeBundle)$/', '$1', $bridge),
+                'bundle'    => str_replace('Bridge', '', preg_replace('/^.+\\\\(\w+BridgeBundle)$/', '$1', $bridge)),
+                'app'       => preg_replace('/^.+\\\\(\w+)BridgeBundle\\\\.+$/', '$1', $bridge)
+            );
+            $applications[] = $application;
+        }
+
+        return $applications;
+    }
 }

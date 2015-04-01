@@ -13,12 +13,12 @@ services:
         class: %canal_tp_sam_ecore_application_registration.class%
         arguments:
             - '@doctrine.orm.entity_manager'
-            - '%kernel.bundles%'
+            - '@canal_tp_sam.application.finder'
 
     canal_tp_sam_ecore_routing_loader:
         class: %canal_tp_sam_ecore_routing_loader.class%
         arguments:
-            - '%kernel.bundles%'
+            - '@canal_tp_sam.application.finder'
             - '%canal_tp_sam_ecore_route_prefix%'
         tags:
             - { name: routing.loader }
