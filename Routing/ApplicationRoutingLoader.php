@@ -16,14 +16,14 @@ use Symfony\Component\Routing\RouteCollection;
 class ApplicationRoutingLoader extends Loader
 {
     private $loaded = false;
-    private $aBundles;
+    private $appplicationFinder;
     private $routePrefix;
 
     public function __construct(
-        $aBundles, $routePrefix
+        $applicationFinder, $routePrefix
     )
     {
-        $this->aBundles = $aBundles;
+        $this->applicationFinder = $applicationFinder;
         $this->routePrefix = $routePrefix;
     }
 
@@ -36,18 +36,12 @@ class ApplicationRoutingLoader extends Loader
         $this->loaded = true;
 
         $collection = new RouteCollection();
-        $aApplications = array();
+        $applications = $this->applicationFinder->getBridgeApplicationBundles();
 
-        preg_match_all(
-            "|\\\CanalTP(?P<applications>[^\\\]*)BridgeBundle|U",
-            implode(',', $this->aBundles),
-            $aApplications,
-            PREG_PATTERN_ORDER
-        );
+        foreach ($applications as $app) {
 
-        foreach ($aApplications['applications'] as $application) {
-
-            $resource = '@CanalTP' . $application . 'BridgeBundle/Resources/config/routing.yml';
+            $resource = '@' . $app['bridge'] . '/Resources/config/routing.yml';
+            $applicationName = strtolower($app['app']);
             $type     = 'yaml';
 
             try {
@@ -62,10 +56,10 @@ class ApplicationRoutingLoader extends Loader
                 //$appRoutes->addPrefix('/'. strtolower($application));
 
                 //Change sam to admin for url
-                if (strtolower($application) == 'samcore') {
+                if ($applicationName == 'samcore') {
                     $importedRoutes->addPrefix('/admin');
                 } else {
-                    $importedRoutes->addPrefix('/'. strtolower($application));
+                    $importedRoutes->addPrefix('/'. $applicationName);
                 }
 
 

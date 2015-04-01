@@ -15,12 +15,12 @@ use CanalTP\SamCoreBundle\Entity\Application;
 class ApplicationRegistration
 {
     private $objectManager;
-    private $aBundles;
+    private $applicationFinder;
 
-    public function __construct(ObjectManager $em, $aBundles)
+    public function __construct(ObjectManager $em, $applicationFinder)
     {
-        $this->objectManager = $em;
-        $this->aBundles      = $aBundles;
+        $this->objectManager        = $em;
+        $this->applicationFinder    = $applicationFinder;
     }
 
     public function register(OutputInterface $output)
@@ -31,15 +31,10 @@ class ApplicationRegistration
             $allApplication[] = $existApplication->getName();
         }
 
-        preg_match_all(
-            "|\\\CanalTP(?P<applications>[^\\\]*)BridgeBundle|U",
-            implode(',', $this->aBundles),
-            $aApplications,
-            PREG_PATTERN_ORDER
-        );
+        $applications = $applicationFinder->getBridgeApplicationBundles();
 
-        foreach ($aApplications['applications'] as $application) {
-            if (!in_array($application, $allApplication)) {
+        foreach ($applications as $application) {
+            if (!in_array($application['app'], $allApplication)) {
                 $app = new Application($application);
                 $this->objectManager->persist($app);
                 $output->writeln('Insert Application ' . $application);
