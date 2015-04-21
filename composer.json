@@ -4,11 +4,11 @@
     "description": "Sam e-core application bundle",
     "keywords": ["sam", "application", "manager"],
     "homepage": "https://github.com/CanalTP/SamEcoreApplicationManagerBundle",
-    "license": "MIT",
+    "license": "AGPLv3",
     "authors": [
         {
-            "name": "Akambi Fagbohoun",
-            "email": "akambi.fagbohoun@canaltp.fr"
+            "name": "Rémy Abi-Khalil",
+            "email": "remy.abikhalil@canaltp.fr"
         },
         {
             "name": "Kévin ZIEMIANSKI",
@@ -17,6 +17,22 @@
         {
             "name": "David QUINTANEL",
             "email": "david.quintanel@canaltp.fr"
+        },
+        {
+            "name": "David NEGRELLO",
+            "email": "david.negrello@canaltp.fr"
+        },
+        {
+            "name": "Thomas CHEVILY",
+            "email": "thomas.chevily@canaltp.fr"
+        },
+        {
+            "name": "Arnaud OGIELA",
+            "email": "arnaud.ogiela@canaltp.fr"
+        },
+        {
+            "name": "Akambi Fagbohoun",
+            "email": "akambi.fagbohoun@canaltp.fr"
         }
     ],
     "require": {
