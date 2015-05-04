@@ -54,7 +54,7 @@ class ApplicationFinder
             }
 
             $app = $this->em->getRepository($this->applicationEntityName)->findOneBy(array('canonicalName' => $appName));
-            
+
             $this->currentApp = $app;
         }
 
@@ -66,16 +66,17 @@ class ApplicationFinder
         if ($this->requestStack->getCurrentRequest()->query->has('app')) {
             $app = $this->em->getRepository($this->applicationEntityName)->findOneBy(
                 array(
-                    'canonicalName' => $this->requestStack->getCurrentRequest()->query->get('app')
+                    'canonicalName' => $this->requestStack->getCurrentRequest()->query->get('app'),
                 )
             );
             $this->currentApp = $app;
         } else {
             $this->findFromUrl();
         }
-            return ($this->currentApp);
+
+        return ($this->currentApp);
     }
-    
+
     public function getUserApps(\FOS\UserBundle\Model\UserInterface $user)
     {
         $apps = array();
@@ -83,7 +84,7 @@ class ApplicationFinder
             $app = $role->getApplication();
             $apps[$app->getId()] = $app->getCanonicalName() == 'samcore' ? 'admin' : $app->getCanonicalName();
         }
-        
+
         return $apps;
     }
 
@@ -96,12 +97,11 @@ class ApplicationFinder
             $this->container->getParameter('kernel.bundles')
         );
 
-        foreach ($bridges as $bridge)
-        {
+        foreach ($bridges as $bridge => $namespace) {
             $application = array(
-                'bridge'    => preg_replace('/^.+\\\\(\w+BridgeBundle)$/', '$1', $bridge),
-                'bundle'    => str_replace('Bridge', '', preg_replace('/^.+\\\\(\w+BridgeBundle)$/', '$1', $bridge)),
-                'app'       => preg_replace('/^.+\\\\(\w+)BridgeBundle\\\\.+$/', '$1', $bridge)
+                'bridge'    => $bridge,
+                'bundle'    => str_replace('Bridge', '', $bridge),
+                'app'       => preg_replace('/^.+\\\\(\w+)BridgeBundle\\\\.+$/', '$1', $namespace),
             );
             $applications[] = $application;
         }
