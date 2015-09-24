@@ -29,7 +29,11 @@ class CheckAccess
         }
         $user = $token->getUser();
         $route = $event->getRequest()->attributes->get('_route');
-        $routeAuthorized = array('fos_user_security_login', 'sam_user_edit_profil');
+        $routeAuthorized = array(
+            'fos_user_security_login',
+            'sam_user_edit_profil',
+            'canal_tp_sam_ecore_application_manager_choose_application'
+        );
         $appService = $this->container->get('canal_tp_sam.application.finder');
 
         if (!$user instanceof UserInterface) {
