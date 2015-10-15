@@ -32,7 +32,8 @@ class CheckAccess
         $routeAuthorized = array(
             'fos_user_security_login',
             'sam_user_edit_profil',
-            'canal_tp_sam_ecore_application_manager_choose_application'
+            'canal_tp_sam_ecore_application_manager_choose_application',
+            'fos_user_registration_confirmed',
         );
         $appService = $this->container->get('canal_tp_sam.application.finder');
 
