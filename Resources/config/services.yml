@@ -1,36 +1,35 @@
-parameters:
-    canal_tp_sam_ecore_routing_loader.class: CanalTP\SamEcoreApplicationManagerBundle\Routing\ApplicationRoutingLoader
-    canal_tp_sam_ecore_route_prefix: 'business'
-    canal_tp_sam.perimeter.form.listener.class: CanalTP\SamEcoreApplicationManagerBundle\Form\EventListener\PerimeterSubscriber
-    canal_tp_sam.application.finder: CanalTP\SamEcoreApplicationManagerBundle\Services\ApplicationFinder
-    canal_tp_sam.application.entity: CanalTP\SamCoreBundle\Entity\Application
-    sam.event.check_access.class: CanalTP\SamEcoreApplicationManagerBundle\Event\CheckAccess
-
 services:
     canal_tp_sam_ecore_routing_loader:
-        class: %canal_tp_sam_ecore_routing_loader.class%
+        class: CanalTP\SamEcoreApplicationManagerBundle\Routing\ApplicationRoutingLoader
         arguments:
             - '@canal_tp_sam.application.finder'
-            - '%canal_tp_sam_ecore_route_prefix%'
+            - 'business'
         tags:
             - { name: routing.loader }
 
     sam.event.check_access:
-        class: %sam.event.check_access.class%
+        class: CanalTP\SamEcoreApplicationManagerBundle\Event\CheckAccess
         arguments:
             - '@service_container'
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
 
     canal_tp_sam.perimeter.form.listener:
-        class: %canal_tp_sam.perimeter.form.listener.class%
+        class: CanalTP\SamEcoreApplicationManagerBundle\Form\EventListener\PerimeterSubscriber
         arguments:
-            - @sam.business_component
-            - @security.context
-            - @fos_user.user_manager
+            - '@sam.business_component'
+            - '@security.context'
+            - '@fos_user.user_manager'
 
     canal_tp_sam.application.finder:
-        class: %canal_tp_sam.application.finder%
+        class: CanalTP\SamEcoreApplicationManagerBundle\Services\ApplicationFinder
         arguments:
-            - @service_container
-            - %canal_tp_sam.application.entity%
+            - '@service_container'
+            - CanalTP\SamCoreBundle\Entity\Application
+
+    sam.business_component:
+        class: CanalTP\SamEcoreApplicationManagerBundle\Component\BusinessComponentRegistry
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@session'
+            - '@canal_tp_sam.application.finder'

@@ -31,13 +31,20 @@ class BusinessComponentRegistry
         if ($application == null) {
             $application = $this->appFinder->findFromUrl();
 
-            if (is_null($application)) throw new OutOfBoundsException(sprintf('business component for %s application not found', $application));
+            if (is_null($application)) {
+                throw new OutOfBoundsException(
+                    sprintf(
+                        'business component for %s application not found',
+                        $application
+                    )
+                );
+            }
 
             $application = $application->getCanonicalName();
         }
 
         if (array_key_exists($application, $this->businessComponents)) {
-           return $this->businessComponents[$application];
+            return $this->businessComponents[$application];
         }
 
         throw new OutOfBoundsException(sprintf('business component for %s application not found', $application));

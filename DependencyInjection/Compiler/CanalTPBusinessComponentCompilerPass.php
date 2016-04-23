@@ -18,12 +18,24 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $factoryDefinition = $container
-            ->register('sam.business_component', 'CanalTP\SamEcoreApplicationManagerBundle\Component\BusinessComponentRegistry')
-            ->addArgument(new Reference('doctrine.orm.entity_manager'))
-            ->addArgument(new Reference('session'))
-            ->addArgument(new Reference('canal_tp_sam.application.finder'));
+        $applicationAddedInRegistry = [];
+        $factoryDefinition = $container->findDefinition('sam.business_component');
 
+        $taggedServices = $container->findTaggedServiceIds(
+            'sam.app_business_component'
+        );
+        foreach ($taggedServices as $id => $tags) {
+            $factoryDefinition->addMethodCall(
+                'addBusinessComponent',
+                array(
+                    $tags[0]['canonical_app_name'],
+                    new Reference($id)
+                )
+            );
+
+            $applicationAddedInRegistry[] = $tags[0]['canonical_app_name'];
+        }
+        
         // @todo: call this function from ApplicationFinder
         $bundles = $container->getParameter('kernel.bundles');
         $bridges = preg_grep(
@@ -38,14 +50,16 @@ class CanalTPBusinessComponentCompilerPass implements CompilerPassInterface
             if (!$container->has('sam.business_component.' . $applicationName)) {
                 continue;
             }
-
-            $factoryDefinition->addMethodCall(
-                'addBusinessComponent',
-                array(
-                    $applicationName,
-                    new Reference('sam.business_component.' . $applicationName)
-                )
-            );
+             // Ensure that sam.business_component.${canonical_app_name} is not already added to the business component registry
+            if (!in_array($applicationName, $applicationAddedInRegistry)) {
+                $factoryDefinition->addMethodCall(
+                    'addBusinessComponent',
+                    array(
+                        $applicationName,
+                        new Reference('sam.business_component.' . $applicationName)
+                    )
+                );
+            }
         }
     }
 }
