@@ -1,5 +1,4 @@
 parameters:
-    canal_tp_sam_ecore_application_registration.class: CanalTP\SamEcoreApplicationManagerBundle\Services\ApplicationRegistration
     canal_tp_sam_ecore_routing_loader.class: CanalTP\SamEcoreApplicationManagerBundle\Routing\ApplicationRoutingLoader
     canal_tp_sam_ecore_route_prefix: 'business'
     canal_tp_sam.perimeter.form.listener.class: CanalTP\SamEcoreApplicationManagerBundle\Form\EventListener\PerimeterSubscriber
@@ -8,13 +7,6 @@ parameters:
     sam.event.check_access.class: CanalTP\SamEcoreApplicationManagerBundle\Event\CheckAccess
 
 services:
-    # Service d'enregistrement des applications
-    canal_tp_sam_ecore_application_registration:
-        class: %canal_tp_sam_ecore_application_registration.class%
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@canal_tp_sam.application.finder'
-
     canal_tp_sam_ecore_routing_loader:
         class: %canal_tp_sam_ecore_routing_loader.class%
         arguments:
