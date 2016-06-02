@@ -4,10 +4,10 @@ namespace CanalTP\SamEcoreApplicationManagerBundle\Services;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
+use CanalTP\SamEcoreApplicationManagerBundle\SamApplication;
 
 /**
  * Allow to get application by several ways
- *
  *
  * @author Kévin ZIEMIANSKI
  */
@@ -91,19 +91,22 @@ class ApplicationFinder
     public function getBridgeApplicationBundles()
     {
         $applications = array();
+        $kernel = $this->container->get('kernel');
+        $bundles = $kernel->getBundles();
 
-        $bridges = preg_grep(
-            "|BridgeBundle|U",
-            $this->container->getParameter('kernel.bundles')
-        );
-
-        foreach ($bridges as $bridge => $namespace) {
-            $application = array(
-                'bridge'    => $bridge,
-                'bundle'    => str_replace('Bridge', '', $bridge),
-                'app'       => preg_replace('/^.+\\\\(\w+)BridgeBundle\\\\.+$/', '$1', $namespace),
-            );
-            $applications[] = $application;
+        foreach ($bundles as $bundleName => $bundle) {
+            if ($bundle instanceof SamApplication) {
+                $applications[] = [
+                    'bundle' => $bundleName,
+                    'app' => $bundle->getCanonicalName()
+                ];
+            } elseif (false !== strpos($bundleName, 'BridgeBundle')) {
+                $applications[] = [
+                    'bridge'    => $bundleName,
+                    'bundle'    => str_replace('Bridge', '', $bundleName),
+                    'app'       => strtolower(preg_replace('/^.+\\\\(\w+)BridgeBundle\\\\.+$/', '$1', get_class($bundle))),
+                ];
+            }
         }
 
         return $applications;
