@@ -3,7 +3,6 @@ services:
         class: CanalTP\SamEcoreApplicationManagerBundle\Routing\ApplicationRoutingLoader
         arguments:
             - '@canal_tp_sam.application.finder'
-            - 'business'
         tags:
             - { name: routing.loader }
 
