@@ -1,5 +1,5 @@
-NmmPortalBundle
-=============
+SamEcoreApplicationManagerBundle
+================================
 
 This bundle is part of [Navitia Mobility Manager](https://github.com/CanalTP/navitia-mobility-manager).
 It contains:
